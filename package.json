@@ -1,0 +1,27 @@
+{
+  "name": "javascript-dev-utils",
+  "version": "1.0.0",
+  "description": "JavaScript dev utils",
+  "keywords": [
+    "javascript-dev-utils",
+    "dev-utils"
+  ],
+  "author": "Zhang Meixue",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/xNoRain001/javascript-dev-utils.git"
+  },
+  "main": "dist/javascript-dev-utils.js",
+  "scripts": {
+    "build": "rollup -c -w"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
+    "rollup": "^2.72.0"
+  },
+  "devDependencies": {
+    "rollup-plugin-babel": "^4.4.0"
+  }
+}
