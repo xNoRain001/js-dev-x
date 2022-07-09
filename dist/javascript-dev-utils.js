@@ -94,11 +94,31 @@
     return strategies[type](target, Ctor);
   };
 
+  var deepClone = function deepClone(target) {
+    var cache = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new WeakSet();
+
+    if (!/^(array|object)$/.test(getType(target))) {
+      return shallowClone(target);
+    }
+
+    if (cache.has(target)) {
+      return target;
+    }
+
+    cache.add(target);
+    var obj = new target.constructor();
+    each(target, function (key, value) {
+      obj[key] = deepClone(value, cache);
+    });
+    return obj;
+  };
+
   var init = function init(utils) {
     utils.getType = getType;
     utils.isArrayLike = isArrayLike;
     utils.each = each;
     utils.shallowClone = shallowClone;
+    utils.deepClone = deepClone;
   };
 
   var utils = Object.create(null);

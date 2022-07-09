@@ -30,6 +30,8 @@ _[method]()
 
 ### shallowClone
 
+### deepClone
+
 ### isArrayLike
 
 ### getType
