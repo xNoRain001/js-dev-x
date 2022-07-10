@@ -1,5 +1,11 @@
 import { getType, isArrayLike } from '../type/index'
 
+/**
+ * 遍历（类）数组或对象
+ * 
+ * @param {(Array|Object)} obj - 要遍历的对象
+ * @param {Function} cb - 回调，会传递给它 index(key) 和 value
+ */
 const each = (obj, cb) => {
   const type = getType(obj)
 

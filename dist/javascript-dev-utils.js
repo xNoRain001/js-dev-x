@@ -14,6 +14,12 @@
     }, _typeof(obj);
   }
 
+  /**
+   * 返回给定值的数据类型
+   * 
+   * @param {*} v - 需要判断类型的值
+   * @returns {string} 给定值的数据类型，都为小写字母。
+   */
   var getType = function getType(v) {
     if (v == null) {
       return "".concat(v);
@@ -35,6 +41,13 @@
   var isPrimitive = function isPrimitive(v) {
     return !(v !== null && _typeof(v) === 'object');
   };
+
+  /**
+   * 遍历（类）数组或对象
+   * 
+   * @param {(Array|Object)} obj - 要遍历的对象
+   * @param {Function} cb - 回调，会传递给它 index(key) 和 value
+   */
 
   var each = function each(obj, cb) {
     var type = getType(obj);
@@ -83,6 +96,12 @@
       return new Ctor(target.message);
     }
   };
+  /**
+   * 返回一个值的浅拷贝
+   * 
+   * @param {*} target - 需要浅拷贝的值
+   * @returns {*} 浅拷贝后的值
+   */
 
   var shallowClone = function shallowClone(target) {
     if (isPrimitive(target)) {
@@ -93,6 +112,13 @@
     var Ctor = target.constructor;
     return strategies[type](target, Ctor);
   };
+
+  /**
+   * 返回一个值的深拷贝
+   * 
+   * @param {*} target - 需要深拷贝的值
+   * @returns {*} 深拷贝后的值
+   */
 
   var deepClone = function deepClone(target) {
     var cache = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new WeakSet();
@@ -152,6 +178,19 @@
       return res;
     }
   };
+  /**
+   * 生成指定范围的随机整数或字母
+   * 
+   * @param {string} type - 类型，可选值有 'int' | 'letters'
+   * @param {string} [range=undefined] - 范围，示例如下：
+   *  '[3, 5]' 表示随机生成 3、4、5 中的一个数，
+   *  '(5, 8)' 表示随机生成 6、7 中的一个数，
+   *  'lower' 表示随机生成小写字母
+   *  'upper' 表示随机生成大写字母
+   *  undefined 表示随机生成字母
+   * @param {number} number - 生成字母的数量，生成随机整数时传入该参数无意义。
+   * @returns {(string|number)} - 生成的随机整数或字母
+   */
 
   var random = function random(type, range, number) {
     return stragegies[type](range, number);
@@ -159,7 +198,6 @@
 
   var init = function init(utils) {
     utils.getType = getType;
-    utils.isArrayLike = isArrayLike;
     utils.each = each;
     utils.shallowClone = shallowClone;
     utils.deepClone = deepClone;

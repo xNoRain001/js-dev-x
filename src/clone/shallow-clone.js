@@ -25,6 +25,12 @@ const strategies = {
   }
 }
 
+/**
+ * 返回一个值的浅拷贝
+ * 
+ * @param {*} target - 需要浅拷贝的值
+ * @returns {*} 浅拷贝后的值
+ */
 const shallowClone = target => {
   if(isPrimitive(target)) {
     return target

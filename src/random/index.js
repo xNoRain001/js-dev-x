@@ -48,6 +48,19 @@ const stragegies = {
   }
 }
 
+/**
+ * 生成指定范围的随机整数或字母
+ * 
+ * @param {string} type - 类型，可选值有 'int' | 'letters'
+ * @param {string} [range=undefined] - 范围，示例如下：
+ *  '[3, 5]' 表示随机生成 3、4、5 中的一个数，
+ *  '(5, 8)' 表示随机生成 6、7 中的一个数，
+ *  'lower' 表示随机生成小写字母
+ *  'upper' 表示随机生成大写字母
+ *  undefined 表示随机生成字母
+ * @param {number} number - 生成字母的数量，生成随机整数时传入该参数无意义。
+ * @returns {(string|number)} - 生成的随机整数或字母
+ */
 const random = (type, range, number) => {
   return stragegies[type](range, number)
 }
