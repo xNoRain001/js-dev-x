@@ -113,12 +113,57 @@
     return obj;
   };
 
+  var LOWERCASELETTERS = 'qwertyuiopasdfghjklzxcvbnm';
+  var UPPERCASELETTERS = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+  var LETTERS = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+  var stragegies = {
+    "int": function int(range) {
+      var isLeftOpen = range[0] === '(';
+      var isRightOpen = range[range.length - 1] === '(';
+      var parts = range.split(',');
+      var a = parts[0].slice(1) * 1;
+      var b = parts[1].slice(0, -1) * 1;
+      isLeftOpen ? a++ : isRightOpen ? b-- : null;
+      return Math.floor(Math.random() * (b - a)) + a;
+    },
+    letters: function letters(type, number) {
+      if (getType(type) === 'number') {
+        number = type;
+        type = undefined;
+      }
+
+      var res = '';
+
+      for (var i = 0; i < number; i++) {
+        if (type === 'lower') {
+          var index = Math.floor(Math.random() * 26);
+          res += LOWERCASELETTERS[index];
+        } else if (type === 'upper') {
+          var _index = Math.floor(Math.random() * 26);
+
+          res += UPPERCASELETTERS[_index];
+        } else {
+          var _index2 = Math.floor(Math.random() * 53);
+
+          res += LETTERS[_index2];
+        }
+      }
+
+      return res;
+    }
+  };
+
+  var random = function random(type, range, number) {
+    return stragegies[type](range, number);
+  };
+
   var init = function init(utils) {
     utils.getType = getType;
     utils.isArrayLike = isArrayLike;
     utils.each = each;
     utils.shallowClone = shallowClone;
     utils.deepClone = deepClone;
+    utils.random = random;
   };
 
   var utils = Object.create(null);
