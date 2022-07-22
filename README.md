@@ -46,20 +46,18 @@ _.each(ary, (index, value) => {
 
 ```javascript
 /**
- * 生成指定范围的随机整数或字母
+ * 生成随机正整数或字母
  * 
- * @param {string} type - 类型，可选值有 'int' | 'letters'
- * @param {string} [range=undefined] - 范围，示例如下：
- *  '[3, 5]' 表示随机生成 3、4、5 中的一个数，
- *  '(5, 8)' 表示随机生成 6、7 中的一个数，
- *  'lower' 表示随机生成小写字母
- *  'upper' 表示随机生成大写字母
- *  undefined 表示随机生成字母
- * @param {number} number - 生成字母的数量，生成随机整数时传入该参数无意义。
+ * @param {string} type - 类型，可选值有
+ *  number | lowerCaseLetter | upCaseLetter | letter
+ * @param {(string|number)} rangeOrNumber - 随机数范围或字母数量，示例如下：
+ *  [3, 5] 表示随机生成 3、4、5 中的一个数
+ *  (5, 8) 表示随机生成 6、7 中的一个数
+ *  3 表示生成三个字母
  * @returns {(string|number)} - 生成的随机整数或字母
  */
-_.random('int', [3, 5])
-_.random('letters', 5)
+_.random('int', '[3, 5]')
+_.random('letter', 5)
 ```
 
 ### getType

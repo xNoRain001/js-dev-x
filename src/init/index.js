@@ -1,7 +1,7 @@
-import { getType } from "../type/index"
 import each from "../each/index"
-import { shallowClone, deepClone } from '../clone/index'
 import random from "../random/index"
+import { shallowClone, deepClone } from '../clone/index'
+import { getType } from "../type/index"
 
 const init = utils => {
   utils.getType = getType

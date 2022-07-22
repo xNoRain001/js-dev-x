@@ -75,6 +75,66 @@
     return obj;
   };
 
+  var lowerCaseLetters = 'qwertyuiopasdfghjklzxcvbnm';
+  var upCaseLetters = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+  var letters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+  var stragegies = {
+    number: function number(range) {
+      var isLeftOpen = range[0] === '(';
+      var isRightOpen = range[range.length - 1] === '(';
+      var parts = range.split(',');
+      var a = +parts[0].slice(1);
+      var b = +parts[1].slice(1, -1);
+      isLeftOpen ? a++ : isRightOpen ? b-- : null;
+      return Math.floor(Math.random() * (b - a)) + a;
+    },
+    lowerCaseLetter: function lowerCaseLetter(number) {
+      var res = '';
+
+      for (var i = 0; i < number; i++) {
+        var index = this.number('[0, 25]');
+        res += lowerCaseLetters[index];
+      }
+
+      return res;
+    },
+    upCaseLetter: function upCaseLetter(number) {
+      var res = '';
+
+      for (var i = 0; i < number; i++) {
+        var index = this.number('[0, 25]');
+        res += upCaseLetters[index];
+      }
+
+      return res;
+    },
+    letter: function letter(number) {
+      var res = '';
+
+      for (var i = 0; i < number; i++) {
+        var index = this.number('[0, 51]');
+        res += letters[index];
+      }
+
+      return res;
+    }
+  };
+  /**
+   * 生成随机正整数或字母
+   * 
+   * @param {string} type - 类型，可选值有
+   *  number | lowerCaseLetter | upCaseLetter | letter
+   * @param {(string|number)} rangeOrNumber - 随机数范围或字母数量，示例如下：
+   *  [3, 5] 表示随机生成 3、4、5 中的一个数
+   *  (5, 8) 表示随机生成 6、7 中的一个数
+   *  3 表示生成三个字母
+   * @returns {(string|number)} - 生成的随机整数或字母
+   */
+
+  var random = function random(type, rangeOrNumber) {
+    return stragegies[type](rangeOrNumber);
+  };
+
   var strategies = {
     array: function array(target) {
       return target.slice();
@@ -137,63 +197,6 @@
       obj[key] = deepClone(value, cache);
     });
     return obj;
-  };
-
-  var LOWERCASELETTERS = 'qwertyuiopasdfghjklzxcvbnm';
-  var UPPERCASELETTERS = 'QWERTYUIOPASDFGHJKLZXCVBNM';
-  var LETTERS = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
-  var stragegies = {
-    "int": function int(range) {
-      var isLeftOpen = range[0] === '(';
-      var isRightOpen = range[range.length - 1] === '(';
-      var parts = range.split(',');
-      var a = parts[0].slice(1) * 1;
-      var b = parts[1].slice(0, -1) * 1;
-      isLeftOpen ? a++ : isRightOpen ? b-- : null;
-      return Math.floor(Math.random() * (b - a)) + a;
-    },
-    letters: function letters(type, number) {
-      if (getType(type) === 'number') {
-        number = type;
-        type = undefined;
-      }
-
-      var res = '';
-
-      for (var i = 0; i < number; i++) {
-        if (type === 'lower') {
-          var index = Math.floor(Math.random() * 26);
-          res += LOWERCASELETTERS[index];
-        } else if (type === 'upper') {
-          var _index = Math.floor(Math.random() * 26);
-
-          res += UPPERCASELETTERS[_index];
-        } else {
-          var _index2 = Math.floor(Math.random() * 53);
-
-          res += LETTERS[_index2];
-        }
-      }
-
-      return res;
-    }
-  };
-  /**
-   * 生成指定范围的随机整数或字母
-   * 
-   * @param {string} type - 类型，可选值有 'int' | 'letters'
-   * @param {string} [range=undefined] - 范围，示例如下：
-   *  '[3, 5]' 表示随机生成 3、4、5 中的一个数，
-   *  '(5, 8)' 表示随机生成 6、7 中的一个数，
-   *  'lower' 表示随机生成小写字母
-   *  'upper' 表示随机生成大写字母
-   *  undefined 表示随机生成字母
-   * @param {number} number - 生成字母的数量，生成随机整数时传入该参数无意义。
-   * @returns {(string|number)} - 生成的随机整数或字母
-   */
-
-  var random = function random(type, range, number) {
-    return stragegies[type](range, number);
   };
 
   var init = function init(utils) {
