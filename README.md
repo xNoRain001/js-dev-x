@@ -101,3 +101,19 @@ const clone = _.deepClone(obj)
 clone.foo.bar = 'baz'
 console.log(obj ) // output: { foo: { bar: 'bar' } }
 ```
+
+### throttle
+
+```javascript
+/**
+ * 函数节流
+ * 
+ * @param {Function} fn - 需要进行节流处理的原函数
+ * @param {number} wait - 节流的时间间隔
+ * @param {Object} options - 用于设置开始边界和结束边界是否触发的配置项
+ * @param {boolean} options.leading - 开始边界是否触发
+ * @param {boolean} options.trailing - 结束边界是否触发
+ * @returns {Function} - 生成的节流函数
+ */
+const throttled = _.throttle(fn)
+```
