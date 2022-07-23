@@ -1,36 +1,38 @@
-import { getType, isArrayLike } from '../type/index'
+import keys from '../keys/index'
+import { 
+  isArray,
+  isArrayLike ,
+  isObject
+} from '../type/index'
 
 /**
  * 遍历（类）数组或对象
  * 
- * @param {(Array|Object)} obj - 要遍历的对象
- * @param {Function} cb - 回调，会传递给它 index(key) 和 value
+ * @param {(Array|Object)} target - 要遍历的目标
+ * @param {Function} cb - 回调函数，会传递给它 key(index) 和 value，当回调函数的返
+ *  回值为 false 时会结束循环。
  */
-const each = (obj, cb) => {
-  const type = getType(obj)
-
-  if (type === 'array' || isArrayLike(obj)) {
-    for (let i = 0, l = obj.length; i < l; i++) {
-      if (cb.call(obj, i, obj[i]) === false) {
+const each = (target, cb) => {
+  if (isArray(target) || isArrayLike(target)) {
+    for (let i = 0, l = target.length; i < l; i++) {
+      if (cb.call(target, i, target[i]) === false) {
         break
       }
     }
   }
-  else if (type === 'object') {
-    const stringProp = Object.keys(obj)
-    const symbolProp = Object.getOwnPropertySymbols(obj)
-    const keys = stringProp.concat(symbolProp)
+  else if (isObject(target)) {
+    const _keys = keys(target)
 
-    for (let i = 0, l = keys.length; i < l; i++) {
-      const key = keys[i]
+    for (let i = 0, l = _keys.length; i < l; i++) {
+      const key = _keys[i]
 
-      if (cb.call(obj, key, obj[key]) === false) {
+      if (cb.call(target, key, target[key]) === false) {
         break
       }
     }
   }
 
-  return obj
+  return target
 }
 
 export default each

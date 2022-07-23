@@ -5,6 +5,8 @@ import debounce from "../debounce/index"
 import merge from "../merge/index"
 import hasPubProperty from "../hasPubProperty/index"
 import uniq from "../uniq/index"
+import useless from "../useless/index"
+import keys from "../keys/index"
 import { shallowClone, deepClone } from '../clone/index'
 import { getType } from "../type/index"
 
@@ -19,6 +21,8 @@ const init = utils => {
   utils.merge = merge
   utils.hasPubProperty = hasPubProperty
   utils.uniq = uniq
+  utils.keys = keys
+  utils.useless = useless
 }
 
 export default init

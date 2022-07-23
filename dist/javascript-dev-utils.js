@@ -4,6 +4,12 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global._ = factory());
 })(this, (function () { 'use strict';
 
+  var keys = function keys(target) {
+    var stringKeys = Object.keys(target);
+    var symbolKeys = Object.getOwnPropertySymbols(target);
+    return stringKeys.concat(symbolKeys);
+  };
+
   function _typeof(obj) {
     "@babel/helpers - typeof";
 
@@ -86,34 +92,31 @@
   /**
    * 遍历（类）数组或对象
    * 
-   * @param {(Array|Object)} obj - 要遍历的对象
-   * @param {Function} cb - 回调，会传递给它 index(key) 和 value
+   * @param {(Array|Object)} target - 要遍历的目标
+   * @param {Function} cb - 回调函数，会传递给它 key(index) 和 value，当回调函数的返
+   *  回值为 false 时会结束循环。
    */
 
-  var each = function each(obj, cb) {
-    var type = getType(obj);
-
-    if (type === 'array' || isArrayLike(obj)) {
-      for (var i = 0, l = obj.length; i < l; i++) {
-        if (cb.call(obj, i, obj[i]) === false) {
+  var each = function each(target, cb) {
+    if (isArray(target) || isArrayLike(target)) {
+      for (var i = 0, l = target.length; i < l; i++) {
+        if (cb.call(target, i, target[i]) === false) {
           break;
         }
       }
-    } else if (type === 'object') {
-      var stringProp = Object.keys(obj);
-      var symbolProp = Object.getOwnPropertySymbols(obj);
-      var keys = stringProp.concat(symbolProp);
+    } else if (isObject(target)) {
+      var _keys = keys(target);
 
-      for (var _i = 0, _l = keys.length; _i < _l; _i++) {
-        var key = keys[_i];
+      for (var _i = 0, _l = _keys.length; _i < _l; _i++) {
+        var key = _keys[_i];
 
-        if (cb.call(obj, key, obj[key]) === false) {
+        if (cb.call(target, key, target[key]) === false) {
           break;
         }
       }
     }
 
-    return obj;
+    return target;
   };
 
   var lowerCaseLetters = 'qwertyuiopasdfghjklzxcvbnm';
@@ -322,7 +325,7 @@
     return _debounce;
   };
 
-  var strategies$1 = {
+  var strategies$2 = {
     replace: function replace(target, sources, key) {
       target[key] = sources;
     }
@@ -336,7 +339,7 @@
         merge(value1, value2, target, _key);
       }
     } else {
-      strategies$1.replace(prevTarget || target, sources, key);
+      strategies$2.replace(prevTarget || target, sources, key);
     }
 
     return target;
@@ -348,6 +351,40 @@
 
   var uniq = function uniq(ary) {
     return _toConsumableArray(new Set(ary));
+  };
+
+  var strategies$1 = {
+    object: function object(target, key) {
+      delete target[key];
+    },
+    array: function array(target, key) {
+      console.log(target, key);
+    }
+  };
+
+  var useless = function useless(target) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    var isStrict = arguments.length > 2 ? arguments[2] : undefined;
+
+    var _keys = keys(target);
+
+    var set = new Set();
+    each(options, function (_, key) {
+      set.add(key);
+    });
+    each(_keys, function (_, key) {
+      if (set.has(target[key])) {
+        var type = getType(target);
+        strategies$1[type](target, key);
+        return;
+      }
+
+      var value = target[key];
+
+      if (isObject(value)) {
+        useless(value, options, isStrict);
+      }
+    });
   };
 
   var strategies = {
@@ -425,6 +462,8 @@
     utils.merge = merge;
     utils.hasPubProperty = hasPubProperty;
     utils.uniq = uniq;
+    utils.keys = keys;
+    utils.useless = useless;
   };
 
   var utils = Object.create(null);
