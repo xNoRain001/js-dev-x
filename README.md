@@ -117,3 +117,17 @@ console.log(obj ) // output: { foo: { bar: 'bar' } }
  */
 const throttled = _.throttle(fn)
 ```
+
+### debounce
+
+```javascript
+/**
+ * 函数防抖 https://github.com/jashkenas/underscore
+ * 
+ * @param {Function} fn - 需要进行防抖处理的原函数
+ * @param {number} wait - 防抖的时间间隔
+ * @param {boolean} immediate - 是否开始边界触发
+ * @returns {Function} - 生成的防抖函数
+ */
+const debounced = _.debounce(fn)
+```

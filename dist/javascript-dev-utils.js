@@ -256,6 +256,64 @@
     return _throttle;
   };
 
+  /**
+   * 函数防抖 https://github.com/jashkenas/underscore
+   * 
+   * @param {Function} fn - 需要进行防抖处理的原函数
+   * @param {number} wait - 防抖的时间间隔
+   * @param {boolean} immediate - 开始边界触发
+   * @returns {Function} - 生成的防抖函数
+   */
+  var debounce = function debounce(fn, wait, immediate) {
+    var context = null,
+        timer = null,
+        params = null,
+        result = null,
+        previous = 0;
+
+    var later = function later() {
+      var passed = Date.now() - previous;
+
+      if (wait > passed) {
+        timer = setTimeout(later, wait - passed);
+      } else {
+        timer = null;
+
+        if (!immediate) {
+          result = fn.call.apply(fn, [context].concat(_toConsumableArray(params)));
+        }
+      }
+    };
+
+    var _debounce = function _debounce() {
+      context = this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      params = args;
+      previous = Date.now();
+
+      if (!timer) {
+        timer = setTimeout(later, wait);
+
+        if (immediate) {
+          result = fn.call.apply(fn, [context].concat(_toConsumableArray(params)));
+        }
+      }
+
+      return result;
+    };
+
+    _debounce.cancel = function () {
+      clearTimeout(timer);
+      timer = context = params = null;
+    };
+
+    return _debounce;
+  };
+
   var strategies = {
     array: function array(target) {
       return target.slice();
@@ -327,6 +385,7 @@
     utils.deepClone = deepClone;
     utils.random = random;
     utils.throttle = throttle;
+    utils.debounce = debounce;
   };
 
   var utils = Object.create(null);

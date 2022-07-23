@@ -1,45 +1,54 @@
-const now = () => {
-  return Date.now()
-}
+/**
+ * 函数防抖 https://github.com/jashkenas/underscore
+ * 
+ * @param {Function} fn - 需要进行防抖处理的原函数
+ * @param {number} wait - 防抖的时间间隔
+ * @param {boolean} immediate - 开始边界触发
+ * @returns {Function} - 生成的防抖函数
+ */
+const debounce = (fn, wait, immediate) => {
+  let context = null,
+    timer = null,
+    params = null,
+    result = null,
+    previous = 0
 
-export default function debounce(func, wait, immediate) {
-  var timeout, previous, args, result, context;
+  const later = () => {
+    const passed = Date.now() - previous
 
-  var later = function() {
-    var passed = now() - previous;
     if (wait > passed) {
-      timeout = setTimeout(later, wait - passed);
+      timer = setTimeout(later, wait - passed);
     } else {
-      timeout = null;
-      if (!immediate) result = func.apply(context, args);
-      // This check is needed because `func` can recursively invoke `debounced`.
-      if (!timeout) args = context = null;
+      timer = null
+
+      if (!immediate) {
+        result = fn.call(context, ...params)
+      }
     }
-  };
+  }
 
-  var debounced = restArguments(function(_args) {
-    context = this;
-    args = _args;
-    previous = now();
-    if (!timeout) {
-      timeout = setTimeout(later, wait);
-      if (immediate) result = func.apply(context, args);
+  const _debounce = function (...args) {
+    context = this
+    params = args
+    previous = Date.now()
+
+    if (!timer) {
+      timer = setTimeout(later, wait)
+
+      if (immediate) {
+        result = fn.call(context, ...params)
+      }
     }
-    return result;
-  });
 
-  debounced.cancel = function() {
-    clearTimeout(timeout);
-    timeout = args = context = null;
-  };
+    return result
+  }
 
-  return debounced;
+  _debounce.cancel = () => {
+    clearTimeout(timer)
+    timer = context = params = null
+  }
+
+  return _debounce
 }
 
-
-
-// const debounce = () => {
-
-// }
-
-// export default debounce
+export default debounce

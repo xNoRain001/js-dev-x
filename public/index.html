@@ -7,42 +7,5 @@
 </head>
 <body>
   <script src="../dist/javascript-dev-utils.js"></script>
-  <script>
-    const log = v => {
-      console.log(v)
-    }
-    const cb = _.throttle(log, 1000, { 
-      leading: true, 
-      trailing: true 
-    })
-
-    setTimeout(() => {
-      cb(1)
-    }, 0)
-
-    setTimeout(() => {
-      cb(2)
-    }, 500)
-  
-    setTimeout(() => {
-      cb(3)
-    }, 1010)
-
-    setTimeout(() => {
-      cb(4)
-    }, 1020)
-
-    // setTimeout(() => {
-    //   cb(4)
-    // }, 1200)
-
-    // setTimeout(() => {
-    //   cb(4)
-    // }, 1500);
-
-    // setTimeout(() => {
-    //   cb(5)
-    // }, 2000);
-  </script>
 </body>
 </html>
