@@ -4,6 +4,7 @@ import throttle from "../throttle/index"
 import debounce from "../debounce/index"
 import merge from "../merge/index"
 import hasPubProperty from "../hasPubProperty/index"
+import uniq from "../uniq/index"
 import { shallowClone, deepClone } from '../clone/index'
 import { getType } from "../type/index"
 
@@ -17,6 +18,7 @@ const init = utils => {
   utils.debounce = debounce
   utils.merge = merge
   utils.hasPubProperty = hasPubProperty
+  utils.uniq = uniq
 }
 
 export default init

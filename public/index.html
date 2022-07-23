@@ -8,18 +8,8 @@
 <body>
   <script src="../dist/javascript-dev-utils.js"></script>
   <script>
-    const fn = (...args) => {
-      console.log('fn', ...args)
-    }
-    const beforeFn = (...args) => {
-      console.log('beforeFn', ...args)
-    }
-    const afterFn = (...args) => {
-      console.log('afterFn', ...args)
-    }
-
-    const o = {}
-    console.log(_.hasPubProperty(o, 'toString'))
+    const ary = [1, 2, 2]
+    console.log(_.uniq(ary))
   </script>
 </body>
 </html>

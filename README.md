@@ -163,3 +163,16 @@ _.merge(ary1, ary2) // output: [{ foo: 'foo' }, ['bar', 'foo'], 'baz']
  */
 _.hasPubProperty({}, 'toString') // output: true
 ```
+
+### uniq
+
+```javascript
+/**
+ * 数组去重，不会影响原数组。
+ * 
+ * @param {Array} target - 需要去重的数组
+ * @returns {Array} - 去重后的新数组
+ */
+const ary = [1, 2, 2]
+_.uniq(ary) // output: [1, 2]
+```

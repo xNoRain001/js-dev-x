@@ -346,6 +346,10 @@
     return prop in target && !target.hasOwnProperty(prop);
   };
 
+  var uniq = function uniq(ary) {
+    return _toConsumableArray(new Set(ary));
+  };
+
   var strategies = {
     array: function array(target) {
       return target.slice();
@@ -420,6 +424,7 @@
     utils.debounce = debounce;
     utils.merge = merge;
     utils.hasPubProperty = hasPubProperty;
+    utils.uniq = uniq;
   };
 
   var utils = Object.create(null);
