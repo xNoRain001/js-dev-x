@@ -150,3 +150,16 @@ const ary1 = ['foo', ['bar', 'baz']]
 const ary2 = [{ foo: 'foo' }, ['bar', 'foo'], 'baz']
 _.merge(ary1, ary2) // output: [{ foo: 'foo' }, ['bar', 'foo'], 'baz']
 ```
+
+### hasPubProperty
+
+```javascript
+/**
+ * 判断一个对象是否存在某个公有属性
+ * 
+ * @param {Object} target - 目标对象
+ * @param {string} prop - 需要判断的公有属性
+ * @returns {boolean} - 结果
+ */
+_.hasPubProperty({}, 'toString') // output: true
+```

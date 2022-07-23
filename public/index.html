@@ -7,13 +7,19 @@
 </head>
 <body>
   <script src="../dist/javascript-dev-utils.js"></script>
-
   <script>
+    const fn = (...args) => {
+      console.log('fn', ...args)
+    }
+    const beforeFn = (...args) => {
+      console.log('beforeFn', ...args)
+    }
+    const afterFn = (...args) => {
+      console.log('afterFn', ...args)
+    }
 
-const ary1 = [1, [1, 2]]
-const ary2 = [{ foo: 'foo' }, [1, 3], 4]
-console.log(_.merge(ary1, ary2)) // output: { foo: 'foo', bar: { foo: 'foo', baz: 'bar' } }
-
+    const o = {}
+    console.log(_.hasPubProperty(o, 'toString'))
   </script>
 </body>
 </html>

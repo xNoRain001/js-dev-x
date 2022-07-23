@@ -3,6 +3,7 @@ import random from "../random/index"
 import throttle from "../throttle/index"
 import debounce from "../debounce/index"
 import merge from "../merge/index"
+import hasPubProperty from "../hasPubProperty/index"
 import { shallowClone, deepClone } from '../clone/index'
 import { getType } from "../type/index"
 
@@ -15,6 +16,7 @@ const init = utils => {
   utils.throttle = throttle
   utils.debounce = debounce
   utils.merge = merge
+  utils.hasPubProperty = hasPubProperty
 }
 
 export default init

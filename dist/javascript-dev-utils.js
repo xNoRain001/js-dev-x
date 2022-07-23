@@ -342,6 +342,10 @@
     return target;
   };
 
+  var hasPubProperty = function hasPubProperty(target, prop) {
+    return prop in target && !target.hasOwnProperty(prop);
+  };
+
   var strategies = {
     array: function array(target) {
       return target.slice();
@@ -415,6 +419,7 @@
     utils.throttle = throttle;
     utils.debounce = debounce;
     utils.merge = merge;
+    utils.hasPubProperty = hasPubProperty;
   };
 
   var utils = Object.create(null);
