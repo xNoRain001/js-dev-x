@@ -65,6 +65,37 @@ const o = {
 _.keys(o) // output: ['bar', 'baz', Symbol(foo)]
 ```
 
+### useless
+
+```javascript
+/**
+ * 根据 value 去除对象或数组中的无用 key，会修改目标对象或数组。
+ * 
+ * @param {(Object|Array)} target - 目标对象或数组
+ * @param {Array} options - 如果目标对象或数组的属性值和此数组中的任何一个元素相等，
+ *  那么该属性会被去除。
+ * @param {boolean} [isStrict=true] - 是否开启严格模式，默认开启。未开启时，如果对
+ * 象属性值是对象或数组，那么对象或数组内和 options 中相等的属性或元素会被去除；如果
+ * 数组属性值是对象或数组，那么对象或数组内和 options 中相等的属性或元素会被去除。
+ * @returns {(Object|Array)} - 去除属性后的目标对象或数组
+ */
+const o = {
+  foo: 'foo',
+  bar: 'bar',
+  baz: {
+    foo: null,
+    bar: undefined
+  }
+}
+
+_.useless(o, [null, 'foo']) // output: { bar: 'bar', baz: { bar: undefined }}
+
+const ary = [null, 'foo', { bar: undefined, baz: [null, 'foo'] }, [null]]
+
+// output: [ { bar: undefined, baz: [] }, []]
+_.useless(ary, [null, 'foo'], false) 
+```
+
 ### random
 
 ```javascript

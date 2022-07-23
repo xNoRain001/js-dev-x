@@ -354,37 +354,72 @@
   };
 
   var strategies$1 = {
-    object: function object(target, key) {
-      delete target[key];
+    object: function object(target, keys, isStrict, set) {
+      each(keys, function (_, key) {
+        var value = target[key];
+
+        if (set.has(value)) {
+          delete target[key];
+          return;
+        }
+
+        if (!isStrict && isArray(value)) {
+          target[key] = useless(value, undefined, isStrict, set);
+        }
+
+        if (isObject(value)) {
+          useless(value, undefined, isStrict, set);
+        }
+      });
+      return target;
     },
-    array: function array(target, key) {
-      console.log(target, key);
+    array: function array(target, keys, isStrict, set) {
+      var ary = [];
+      each(keys, function (_, key) {
+        var value = target[key];
+
+        if (set.has(value)) {
+          return;
+        }
+
+        if (!isStrict && isObject(value)) {
+          ary.push(useless(value, undefined, isStrict, set));
+        }
+
+        if (isArray(value)) {
+          ary.push(useless(value, undefined, isStrict, set));
+        }
+      });
+      return ary;
     }
   };
+  /**
+   * 根据 value 去除对象或数组中的无用 key，会修改目标对象或数组。
+   * 
+   * @param {(Object|Array)} target - 目标对象或数组
+   * @param {Array} options - 如果目标对象或数组的属性值和此数组中的任何一个元素相等，
+   *  那么该属性会被去除。
+   * @param {boolean} [isStrict=true] - 是否开启严格模式，默认开启。未开启时，如果对
+   * 象属性值是对象或数组，那么对象或数组内和 options 中相等的属性或元素会被去除；如果
+   * 数组属性值是对象或数组，那么对象或数组内和 options 中相等的属性或元素会被去除。
+   * @returns {(Object|Array)} - 去除属性后的目标对象或数组
+   */
 
   var useless = function useless(target) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-    var isStrict = arguments.length > 2 ? arguments[2] : undefined;
+    var isStrict = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+    var set = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : new Set();
 
     var _keys = keys(target);
 
-    var set = new Set();
-    each(options, function (_, key) {
-      set.add(key);
-    });
-    each(_keys, function (_, key) {
-      if (set.has(target[key])) {
-        var type = getType(target);
-        strategies$1[type](target, key);
-        return;
-      }
+    if (!set.size) {
+      each(options, function (_, key) {
+        set.add(key);
+      });
+    }
 
-      var value = target[key];
-
-      if (isObject(value)) {
-        useless(value, options, isStrict);
-      }
-    });
+    var type = getType(target);
+    return strategies$1[type](target, _keys, isStrict, set);
   };
 
   var strategies = {
