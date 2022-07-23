@@ -131,3 +131,22 @@ const throttled = _.throttle(fn)
  */
 const debounced = _.debounce(fn)
 ```
+
+### merge
+
+```javascript
+/**
+ * 合并两个对象或两个数组，会改变目标对象或目标数组
+ * 
+ * @param {(Object|Array)} target - 目标对象或目标数组
+ * @param {(Object|Array)} sources - 来源对象或来源数组
+ * @returns {(Object|Array)} - 合并完成后被修改的的目标对象或目标数组
+ */
+const o1 = { foo: 'foo', bar: { baz: ['foo', 'bar'] } }
+const o2 = { foo: 'foo', bar: { foo: 'foo', baz: 'bar' } }
+_.merge(o1, o2) // output: { foo: 'foo', bar: { foo: 'foo', baz: 'bar' } }
+
+const ary1 = ['foo', ['bar', 'baz']]
+const ary2 = [{ foo: 'foo' }, ['bar', 'foo'], 'baz']
+_.merge(ary1, ary2) // output: [{ foo: 'foo' }, ['bar', 'foo'], 'baz']
+```

@@ -75,6 +75,14 @@
     return !(v !== null && _typeof(v) === 'object');
   };
 
+  var isObject = function isObject(v) {
+    return getType(v) === 'object';
+  };
+
+  var isArray = function isArray(v) {
+    return Array.isArray(v);
+  };
+
   /**
    * 遍历（类）数组或对象
    * 
@@ -314,6 +322,26 @@
     return _debounce;
   };
 
+  var strategies$1 = {
+    replace: function replace(target, sources, key) {
+      target[key] = sources;
+    }
+  };
+
+  var merge = function merge(target, sources, prevTarget, key) {
+    if (isObject(target) && isObject(sources) || isArray(target) && isArray(sources)) {
+      for (var _key in sources) {
+        var value1 = target[_key];
+        var value2 = sources[_key];
+        merge(value1, value2, target, _key);
+      }
+    } else {
+      strategies$1.replace(prevTarget || target, sources, key);
+    }
+
+    return target;
+  };
+
   var strategies = {
     array: function array(target) {
       return target.slice();
@@ -386,6 +414,7 @@
     utils.random = random;
     utils.throttle = throttle;
     utils.debounce = debounce;
+    utils.merge = merge;
   };
 
   var utils = Object.create(null);
