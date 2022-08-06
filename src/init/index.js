@@ -10,6 +10,7 @@ import hasPub from "../hasPub"
 import useless from "../useless"
 import throttle from "../throttle"
 import debounce from "../debounce"
+import eachReverse from "../eachReverse/each-reverse"
 import { shallowClone, deepClone } from '../clone'
 import { 
   isDef,
@@ -55,6 +56,7 @@ const init = utils => {
   utils.isArrayLike = isArrayLike
   utils.isUndefined = isUndefined
   utils.isPrimitive = isPrimitive
+  utils.eachReverse = eachReverse
   utils.shallowClone = shallowClone
   utils.isPlainObject = isPlainObject
 }

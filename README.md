@@ -47,6 +47,9 @@ _.each(o, (key, value) => {
     return false 
   }
 })
+
+// 顺便提供了倒序遍历的方法
+_.eachReverse()
 ```
 
 </details>
@@ -302,13 +305,14 @@ _.hasPub({}, 'toString') // output: true
 
 <details>
 
-<summary>uniq - 数组去重，不会影响原数组。</summary>
+<summary>uniq - 数组去重。</summary>
 
 ```javascript
 /**
  * 数组去重，不会影响原数组。
  * 
  * @param {Array} target - 需要去重的数组
+ * @param {boolean} [mutation=false] - 是否影响原数组，默认为 false。
  * @returns {Array} - 去重后的新数组
  */
 const ary = [1, 2, 2]

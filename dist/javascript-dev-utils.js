@@ -171,7 +171,43 @@
     return ary[ary.length - 1];
   };
 
+  var eachReverse = function eachReverse(target, cb) {
+    if (isArray(target) || isArrayLike(target)) {
+      for (var i = target.length - 1; i >= 0; i--) {
+        if (cb.call(target, i, target[i]) === false) {
+          break;
+        }
+      }
+    } else if (isObject(target)) {
+      var _keys = keys(target);
+
+      for (var _i = _keys.length - 1; _i >= 0; _i--) {
+        var key = _keys[_i];
+
+        if (cb.call(target, key, target[key]) === false) {
+          break;
+        }
+      }
+    }
+
+    return target;
+  };
+
   var uniq = function uniq(ary) {
+    var isMutation = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    if (isMutation) {
+      var set = new Set();
+      eachReverse(ary, function (index, value) {
+        if (set.has(value)) {
+          ary.splice(index, 1);
+        } else {
+          set.add(value);
+        }
+      });
+      return ary;
+    }
+
     return _toConsumableArray(new Set(ary));
   };
 
@@ -565,6 +601,7 @@
     utils.isArrayLike = isArrayLike;
     utils.isUndefined = isUndefined;
     utils.isPrimitive = isPrimitive;
+    utils.eachReverse = eachReverse;
     utils.shallowClone = shallowClone;
     utils.isPlainObject = isPlainObject;
   };
