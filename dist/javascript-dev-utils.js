@@ -14,6 +14,14 @@
     return stringKeys.concat(symbolKeys);
   };
 
+  var isDef = function isDef(v) {
+    return v != null;
+  };
+
+  var isUndef = function isUndef(v) {
+    return v == null;
+  };
+
   function _typeof(obj) {
     "@babel/helpers - typeof";
 
@@ -73,6 +81,14 @@
     return !/^(object|function)$/.test(type) ? type : Object.prototype.toString.call(v).slice(8, -1).toLowerCase();
   };
 
+  var isArray = function isArray(v) {
+    return Array.isArray(v);
+  };
+
+  var isObject = function isObject(v) {
+    return v !== null && _typeof(v) === 'object';
+  };
+
   var isArrayLike = function isArrayLike(v) {
     return v != null && isLength(v.length) && !/^function$/.test(_typeof(v));
   };
@@ -82,15 +98,11 @@
   };
 
   var isPrimitive = function isPrimitive(v) {
-    return !(v !== null && _typeof(v) === 'object');
+    return !isObject(v);
   };
 
-  var isObject = function isObject(v) {
-    return getType(v) === 'object';
-  };
-
-  var isArray = function isArray(v) {
-    return Array.isArray(v);
+  var isPlainObject = function isPlainObject(v) {
+    return Object.prototype.toString.call(v).slice(8, -1) === 'Object';
   };
 
   /**
@@ -495,15 +507,21 @@
     utils.uniq = uniq;
     utils.keys = keys;
     utils.each = each;
+    utils.isDef = isDef;
     utils.merge = merge;
     utils.random = random;
     utils.hasPub = hasPub;
+    utils.isUndef = isUndef;
+    utils.isArray = isArray;
     utils.getType = getType;
     utils.useless = useless;
+    utils.isObject = isObject;
     utils.throttle = throttle;
     utils.debounce = debounce;
     utils.deepClone = deepClone;
+    utils.isPrimitive = isPrimitive;
     utils.shallowClone = shallowClone;
+    utils.isPlainObject = isPlainObject;
   };
 
   var utils = Object.create(null);

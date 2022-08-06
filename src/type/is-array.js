@@ -1,5 +1,3 @@
-const isArray = v => {
-  return Array.isArray(v)
-}
+const isArray = v => Array.isArray(v)
 
 export default isArray

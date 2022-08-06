@@ -1,7 +1,3 @@
-import getType from "./get-type"
-
-const isObject = v => {
-  return getType(v) === 'object'
-}
+const isObject = v => v !== null && typeof v === 'object'
 
 export default isObject

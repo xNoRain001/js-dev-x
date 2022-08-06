@@ -1,6 +1,6 @@
-import { getType } from "../type/index"
-import each from '../each/index'
+import each from '../each'
 import shallowClone from "./shallow-clone"
+import { getType } from "../type"
 
 /**
  * 返回一个值的深拷贝

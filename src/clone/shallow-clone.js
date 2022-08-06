@@ -1,5 +1,5 @@
-import { getType, isPrimitive } from "../type/index"
 import each from '../each/index'
+import { getType, isPrimitive } from "../type"
 
 const strategies = {
   array (target) {
