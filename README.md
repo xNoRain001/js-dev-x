@@ -26,11 +26,13 @@ _[method]()
 
 ## APIs
 
-### each
+<details>
+
+<summary>each - 遍历（类）数组或对象。</summary>
 
 ```javascript
 /**
- * 遍历（类）数组或对象
+ * 遍历（类）数组或对象。
  * 
  * @param {(Array|Object)} target - 要遍历的目标
  * @param {Function} cb - 回调函数，会传递给它 key(index) 和 value，当回调函数的返
@@ -47,11 +49,15 @@ _.each(o, (key, value) => {
 })
 ```
 
-### keys
+</details>
+
+<details>
+
+<summary>keys - 返回一个对象的所有可枚举 key 组成的数组。</summary>
 
 ```javascript
 /**
- * 返回一个对象的所有可枚举 key 组成的数组
+ * 返回一个对象的所有可枚举 key 组成的数组。
  * 
  * @param {Object} obj - 对象
  * @returns {Array} 返回一个对象的所有 key 组成的数组
@@ -65,7 +71,11 @@ const o = {
 _.keys(o) // output: ['bar', 'baz', Symbol(foo)]
 ```
 
-### useless
+</details>
+
+<details>
+
+<summary>useless - 根据 value 去除对象或数组中的无用 key，会修改目标对象或数组。</summary>
 
 ```javascript
 /**
@@ -96,11 +106,15 @@ const ary = [null, 'foo', { bar: undefined, baz: [null, 'foo'] }, [null]]
 _.useless(ary, [null, 'foo'], false) 
 ```
 
-### random
+</details>
+
+<details>
+
+<summary>random - 生成随机正整数或随机字母。</summary>
 
 ```javascript
 /**
- * 生成随机正整数或随机字母
+ * 生成随机正整数或随机字母。
  * 
  * @param {string} type - 类型，可选值有
  *  - 'number'
@@ -117,11 +131,15 @@ _.random('number', '[3, 5]') // output: 4
 _.random('letter', 5) // output: 'PTzgp'
 ```
 
-### getType
+</details>
+
+<details>
+
+<summary>getType - 返回给定值的数据类型。</summary>
 
 ```javascript
 /**
- * 返回给定值的数据类型
+ * 返回给定值的数据类型。
  * 
  * @param {*} v - 需要判断类型的值
  * @returns {string} 给定值的数据类型，结果都为全小写字母。
@@ -129,11 +147,17 @@ _.random('letter', 5) // output: 'PTzgp'
 _.getType({}) // output: 'object'
 ```
 
+</details>
+
+<details>
+
+<summary>shallowClone - 返回一个值的浅拷贝。</summary>
+
 ### shallowClone
 
 ```javascript
 /**
- * 返回一个值的浅拷贝
+ * 返回一个值的浅拷贝。
  * 
  * @param {*} target - 需要浅拷贝的值
  * @returns {*} 浅拷贝后的值
@@ -145,11 +169,15 @@ clone.foo.bar = 'baz'
 obj // output: { foo: { bar: 'baz' } }
 ```
 
-### deepClone
+</details>
+
+<details>
+
+<summary>shallowClone - 返回一个值的深拷贝。</summary>
 
 ```javascript
 /**
- * 返回一个值的深拷贝
+ * 返回一个值的深拷贝。
  * 
  * @param {*} target - 需要深拷贝的值
  * @returns {*} 深拷贝后的值
@@ -161,11 +189,15 @@ clone.foo.bar = 'baz'
 obj // output: { foo: { bar: 'bar' } }
 ```
 
-### throttle
+</details>
+
+<details>
+
+<summary>throttle - 函数节流。</summary>
 
 ```javascript
 /**
- * 函数节流
+ * 函数节流。
  * 
  * @param {Function} fn - 需要进行节流处理的原函数
  * @param {number} wait - 节流的时间间隔
@@ -177,11 +209,15 @@ obj // output: { foo: { bar: 'bar' } }
 const throttled = _.throttle(fn)
 ```
 
-### debounce
+</details>
+
+<details>
+
+<summary>debounce - 函数防抖。</summary>
 
 ```javascript
 /**
- * 函数防抖
+ * 函数防抖。
  * 
  * @param {Function} fn - 需要进行防抖处理的原函数
  * @param {number} wait - 防抖的时间间隔
@@ -191,11 +227,15 @@ const throttled = _.throttle(fn)
 const debounced = _.debounce(fn)
 ```
 
-### merge
+</details>
+
+<details>
+
+<summary>merge - 合并两个对象或两个数组，会改变目标对象或目标数组。</summary>
 
 ```javascript
 /**
- * 合并两个对象或两个数组，会改变目标对象或目标数组
+ * 合并两个对象或两个数组，会改变目标对象或目标数组。
  * 
  * @param {(Object|Array)} target - 目标对象或目标数组
  * @param {(Object|Array)} sources - 来源对象或来源数组
@@ -210,11 +250,15 @@ const ary2 = [{ foo: 'foo' }, ['bar', 'foo'], 'baz']
 _.merge(ary1, ary2) // output: [{ foo: 'foo' }, ['bar', 'foo'], 'baz']
 ```
 
-### has
+</details>
+
+<details>
+
+<summary>has - 判断一个对象是否存在某个私有属性。</summary>
 
 ```javascript
 /**
- * 判断一个对象是否存在某个私有属性
+ * 判断一个对象是否存在某个私有属性。
  * 
  * @param {Object} target - 目标对象
  * @param {string} prop - 需要判断的公有属性
@@ -223,11 +267,15 @@ _.merge(ary1, ary2) // output: [{ foo: 'foo' }, ['bar', 'foo'], 'baz']
 _.has({}, 'foo') // output: false
 ```
 
-### hasPub
+</details>
+
+<details>
+
+<summary>hasPub - 判断一个对象是否存在某个公有属性。</summary>
 
 ```javascript
 /**
- * 判断一个对象是否存在某个公有属性
+ * 判断一个对象是否存在某个公有属性。
  * 
  * @param {Object} target - 目标对象
  * @param {string} prop - 需要判断的公有属性
@@ -236,7 +284,11 @@ _.has({}, 'foo') // output: false
 _.hasPub({}, 'toString') // output: true
 ```
 
-### uniq
+</details>
+
+<details>
+
+<summary>uniq - 数组去重，不会影响原数组。</summary>
 
 ```javascript
 /**
@@ -249,7 +301,11 @@ const ary = [1, 2, 2]
 _.uniq(ary) // output: [1, 2]
 ```
 
-### last
+</details>
+
+<details>
+
+<summary>last - 获取数组的最后一个元素。</summary>
 
 ```javascript
 /**
@@ -262,7 +318,11 @@ const ary = [1, 2, 3]
 _.last(ary) // output: 3
 ```
 
-### wait
+</details>
+
+<details>
+
+<summary>wait - 延迟函数。</summary>
 
 ```javascript
 /**
@@ -278,3 +338,5 @@ async function foo () {
 
 foo()
 ```
+
+</details>
