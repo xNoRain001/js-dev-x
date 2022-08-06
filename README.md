@@ -145,6 +145,20 @@ _.random('letter', 5) // output: 'PTzgp'
  * @returns {string} 给定值的数据类型，结果都为全小写字母。
  */
 _.getType({}) // output: 'object'
+
+// 顺便提供了一些其它的方法
+_.isString()
+_.isNumber()
+_.isBoolean()
+_.isNull()
+_.isUndefined()
+_.isPrimitive()
+_.isObject()
+_.isArray()
+_.isArrayLike()
+_.isPlainObject()
+_.isDef() // 值不是 null 或 undefined 时返回 true
+_.isUndef() // 值是 null 或 undefined 时返回 true
 ```
 
 </details>
