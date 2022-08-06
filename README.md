@@ -261,3 +261,20 @@ _.uniq(ary) // output: [1, 2]
 const ary = [1, 2, 3]
 _.last(ary) // output: 3
 ```
+
+### wait
+
+```javascript
+/**
+ * 延迟函数。
+ * 
+ * @param {number} time - 等待时间
+ */
+async function foo () {
+  await _.wait(1000)
+  // after 1s
+  console.log('foo')
+}
+
+foo()
+```

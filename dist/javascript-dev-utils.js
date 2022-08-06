@@ -8,6 +8,14 @@
     return target.hasOwnProperty(prop);
   };
 
+  var wait = function wait(time) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve();
+      }, time);
+    });
+  };
+
   var keys = function keys(target) {
     var stringKeys = Object.keys(target);
     var symbolKeys = Object.getOwnPropertySymbols(target);
@@ -532,6 +540,7 @@
 
   var init = function init(utils) {
     utils.has = has;
+    utils.wait = wait;
     utils.uniq = uniq;
     utils.last = last;
     utils.keys = keys;
