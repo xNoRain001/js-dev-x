@@ -11,12 +11,19 @@ import debounce from "../debounce"
 import { shallowClone, deepClone } from '../clone'
 import { 
   isDef,
+  isNull,
+  getType,
   isArray,
   isUndef,
-  getType, 
   isObject,
+  isNumber,
+  isString,
+  isBoolean,
+  isFunction,
+  isUndefined,
+  isArrayLike,
   isPrimitive,
-  isPlainObject,
+  isPlainObject
 } from "../type"
 
 const init = utils => {
@@ -26,6 +33,7 @@ const init = utils => {
   utils.each = each
   utils.isDef = isDef
   utils.merge = merge
+  utils.isNull = isNull
   utils.random = random
   utils.hasPub = hasPub
   utils.isUndef = isUndef
@@ -33,9 +41,15 @@ const init = utils => {
   utils.getType = getType
   utils.useless = useless
   utils.isObject = isObject
+  utils.isNumber = isNumber
+  utils.isString = isString
   utils.throttle = throttle
   utils.debounce = debounce
+  utils.isBoolean = isBoolean
   utils.deepClone = deepClone
+  utils.isFunction = isFunction
+  utils.isArrayLike = isArrayLike
+  utils.isUndefined = isUndefined
   utils.isPrimitive = isPrimitive
   utils.shallowClone = shallowClone
   utils.isPlainObject = isPlainObject

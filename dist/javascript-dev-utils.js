@@ -18,6 +18,10 @@
     return v != null;
   };
 
+  var isNull = function isNull(v) {
+    return v === null;
+  };
+
   var isUndef = function isUndef(v) {
     return v == null;
   };
@@ -87,6 +91,26 @@
 
   var isObject = function isObject(v) {
     return v !== null && _typeof(v) === 'object';
+  };
+
+  var isNumber = function isNumber(v) {
+    return typeof v === 'number';
+  };
+
+  var isString = function isString(v) {
+    return typeof v === 'string';
+  };
+
+  var isBoolean = function isBoolean(v) {
+    return v === true || v === false;
+  };
+
+  var isFunction = function isFunction(v) {
+    return typeof v === 'function';
+  };
+
+  var isUndefined = function isUndefined(v) {
+    return v === undefined;
   };
 
   var isArrayLike = function isArrayLike(v) {
@@ -509,6 +533,7 @@
     utils.each = each;
     utils.isDef = isDef;
     utils.merge = merge;
+    utils.isNull = isNull;
     utils.random = random;
     utils.hasPub = hasPub;
     utils.isUndef = isUndef;
@@ -516,16 +541,22 @@
     utils.getType = getType;
     utils.useless = useless;
     utils.isObject = isObject;
+    utils.isNumber = isNumber;
+    utils.isString = isString;
     utils.throttle = throttle;
     utils.debounce = debounce;
+    utils.isBoolean = isBoolean;
     utils.deepClone = deepClone;
+    utils.isFunction = isFunction;
+    utils.isArrayLike = isArrayLike;
+    utils.isUndefined = isUndefined;
     utils.isPrimitive = isPrimitive;
     utils.shallowClone = shallowClone;
     utils.isPlainObject = isPlainObject;
   };
 
   var utils = Object.create(null);
-  init(utils);
+  init.call(undefined, utils);
 
   return utils;
 

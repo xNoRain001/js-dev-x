@@ -2,6 +2,6 @@ import init from "./init/index"
 
 const utils = Object.create(null)
 
-init(utils)
+init.call(this, utils)
 
 export default utils
