@@ -16,6 +16,13 @@
     });
   };
 
+  var swap = function swap(target, a, b) {
+    var temp = target[a];
+    target[a] = target[b];
+    target[b] = temp;
+    return target;
+  };
+
   var keys = function keys(target) {
     var stringKeys = Object.keys(target);
     var symbolKeys = Object.getOwnPropertySymbols(target);
@@ -171,40 +178,24 @@
     return ary[ary.length - 1];
   };
 
-  var eachReverse = function eachReverse(target, cb) {
-    if (isArray(target) || isArrayLike(target)) {
-      for (var i = target.length - 1; i >= 0; i--) {
-        if (cb.call(target, i, target[i]) === false) {
-          break;
-        }
-      }
-    } else if (isObject(target)) {
-      var _keys = keys(target);
-
-      for (var _i = _keys.length - 1; _i >= 0; _i--) {
-        var key = _keys[_i];
-
-        if (cb.call(target, key, target[key]) === false) {
-          break;
-        }
-      }
-    }
-
-    return target;
-  };
-
   var uniq = function uniq(ary) {
     var isMutation = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
     if (isMutation) {
       var set = new Set();
-      eachReverse(ary, function (index, value) {
+
+      for (var i = 0; i < ary.length; i++) {
+        var value = ary[i];
+
         if (set.has(value)) {
-          ary.splice(index, 1);
+          ary.splice(i, 1);
+          i--;
         } else {
           set.add(value);
         }
-      });
+      }
+
+      console.log('@');
       return ary;
     }
 
@@ -510,6 +501,28 @@
     return _debounce;
   };
 
+  var eachReverse = function eachReverse(target, cb) {
+    if (isArray(target) || isArrayLike(target)) {
+      for (var i = target.length - 1; i >= 0; i--) {
+        if (cb.call(target, i, target[i]) === false) {
+          break;
+        }
+      }
+    } else if (isObject(target)) {
+      var _keys = keys(target);
+
+      for (var _i = _keys.length - 1; _i >= 0; _i--) {
+        var key = _keys[_i];
+
+        if (cb.call(target, key, target[key]) === false) {
+          break;
+        }
+      }
+    }
+
+    return target;
+  };
+
   var strategies = {
     array: function array(target) {
       return target.slice();
@@ -577,6 +590,7 @@
   var init = function init(utils) {
     utils.has = has;
     utils.wait = wait;
+    utils.swap = swap;
     utils.uniq = uniq;
     utils.last = last;
     utils.keys = keys;

@@ -312,7 +312,7 @@ _.hasPub({}, 'toString') // output: true
  * 数组去重，不会影响原数组。
  * 
  * @param {Array} target - 需要去重的数组
- * @param {boolean} [mutation=false] - 是否影响原数组，默认为 false。
+ * @param {boolean} [isMutation=false] - 是否影响原数组，默认为 false。
  * @returns {Array} - 去重后的新数组
  */
 const ary = [1, 2, 2]

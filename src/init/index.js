@@ -1,5 +1,6 @@
 import has from "../has"
 import wait from "../wait"
+import swap from "../swap"
 import each from "../each"
 import last from "../last"
 import uniq from "../uniq"
@@ -32,6 +33,7 @@ import {
 const init = utils => {
   utils.has = has
   utils.wait = wait
+  utils.swap = swap
   utils.uniq = uniq
   utils.last = last
   utils.keys = keys

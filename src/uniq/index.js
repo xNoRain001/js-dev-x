@@ -1,17 +1,19 @@
-import eachReverse from "../eachReverse/each-reverse"
-
 const uniq = (ary, isMutation = false) => {
   if (isMutation) {
     const set = new Set()
 
-    eachReverse(ary, (index, value) => {
+    for (let i = 0; i < ary.length; i++) {
+      const value = ary[i]
+
       if (set.has(value)) {
-        ary.splice(index, 1)
+        ary.splice(i, 1)
+        i--
       } else {
         set.add(value)
       }
-    })
+    }
 
+    console.log('@')
     return ary
   }
 
