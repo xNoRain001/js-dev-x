@@ -1,5 +1,6 @@
 import has from "../has"
 import each from "../each"
+import last from "../last"
 import uniq from "../uniq"
 import keys from "../keys"
 import merge from "../merge"
@@ -29,6 +30,7 @@ import {
 const init = utils => {
   utils.has = has
   utils.uniq = uniq
+  utils.last = last
   utils.keys = keys
   utils.each = each
   utils.isDef = isDef

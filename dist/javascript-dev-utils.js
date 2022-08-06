@@ -159,6 +159,10 @@
     return target;
   };
 
+  var last = function last(ary) {
+    return ary[ary.length - 1];
+  };
+
   var uniq = function uniq(ary) {
     return _toConsumableArray(new Set(ary));
   };
@@ -529,6 +533,7 @@
   var init = function init(utils) {
     utils.has = has;
     utils.uniq = uniq;
+    utils.last = last;
     utils.keys = keys;
     utils.each = each;
     utils.isDef = isDef;
@@ -556,7 +561,7 @@
   };
 
   var utils = Object.create(null);
-  init.call(undefined, utils);
+  init(utils);
 
   return utils;
 

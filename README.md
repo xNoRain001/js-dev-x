@@ -248,3 +248,16 @@ _.hasPub({}, 'toString') // output: true
 const ary = [1, 2, 2]
 _.uniq(ary) // output: [1, 2]
 ```
+
+### last
+
+```javascript
+/**
+ * 获取数组的最后一个元素。
+ * 
+ * @param {Array} ary - 数组
+ * @returns {*} - 数组的最后一个元素
+ */
+const ary = [1, 2, 3]
+_.last(ary) // output: 3
+```
