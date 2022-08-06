@@ -1,5 +1,5 @@
 /**
- * 函数防抖 https://github.com/jashkenas/underscore
+ * 函数防抖 Credits: borrowed code from https://github.com/jashkenas/underscore
  * 
  * @param {Function} fn - 需要进行防抖处理的原函数
  * @param {number} wait - 防抖的时间间隔

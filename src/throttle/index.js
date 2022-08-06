@@ -1,5 +1,5 @@
 /**
- * 函数节流 https://github.com/jashkenas/underscore
+ * 函数节流 Credits: borrowed code from https://github.com/jashkenas/underscore
  * 
  * @param {Function} fn - 需要进行节流处理的原函数
  * @param {number} wait - 节流的时间间隔

@@ -1,28 +1,30 @@
-import each from "../each/index"
-import random from "../random/index"
-import throttle from "../throttle/index"
-import debounce from "../debounce/index"
-import merge from "../merge/index"
-import hasPubProperty from "../hasPubProperty/index"
-import uniq from "../uniq/index"
-import useless from "../useless/index"
-import keys from "../keys/index"
-import { shallowClone, deepClone } from '../clone/index'
-import { getType } from "../type/index"
+import has from "../has"
+import each from "../each"
+import uniq from "../uniq"
+import keys from "../keys"
+import merge from "../merge"
+import random from "../random"
+import hasPub from "../hasPub"
+import useless from "../useless"
+import throttle from "../throttle"
+import debounce from "../debounce"
+import { shallowClone, deepClone } from '../clone'
+import { getType } from "../type"
 
 const init = utils => {
-  utils.getType = getType
-  utils.each = each
-  utils.shallowClone = shallowClone
-  utils.deepClone = deepClone
-  utils.random = random
-  utils.throttle = throttle
-  utils.debounce = debounce
-  utils.merge = merge
-  utils.hasPubProperty = hasPubProperty
+  utils.has = has
   utils.uniq = uniq
   utils.keys = keys
+  utils.each = each
+  utils.merge = merge
+  utils.random = random
+  utils.hasPub = hasPub
+  utils.getType = getType
   utils.useless = useless
+  utils.throttle = throttle
+  utils.debounce = debounce
+  utils.deepClone = deepClone
+  utils.shallowClone = shallowClone
 }
 
 export default init

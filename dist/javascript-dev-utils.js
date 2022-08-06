@@ -4,6 +4,10 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global._ = factory());
 })(this, (function () { 'use strict';
 
+  var has = function has(target, prop) {
+    return target.hasOwnProperty(prop);
+  };
+
   var keys = function keys(target) {
     var stringKeys = Object.keys(target);
     var symbolKeys = Object.getOwnPropertySymbols(target);
@@ -119,6 +123,30 @@
     return target;
   };
 
+  var uniq = function uniq(ary) {
+    return _toConsumableArray(new Set(ary));
+  };
+
+  var strategies$2 = {
+    replace: function replace(target, sources, key) {
+      target[key] = sources;
+    }
+  };
+
+  var merge = function merge(target, sources, prevTarget, key) {
+    if (isObject(target) && isObject(sources) || isArray(target) && isArray(sources)) {
+      for (var _key in sources) {
+        var value1 = target[_key];
+        var value2 = sources[_key];
+        merge(value1, value2, target, _key);
+      }
+    } else {
+      strategies$2.replace(prevTarget || target, sources, key);
+    }
+
+    return target;
+  };
+
   var lowerCaseLetters = 'qwertyuiopasdfghjklzxcvbnm';
   var upCaseLetters = 'QWERTYUIOPASDFGHJKLZXCVBNM';
   var letters = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
@@ -179,8 +207,81 @@
     return stragegies[type](rangeOrNumber);
   };
 
+  var hasPub = function hasPub(target, prop) {
+    return prop in target && !has(target, prop);
+  };
+
+  var strategies$1 = {
+    object: function object(target, keys, isStrict, set) {
+      each(keys, function (_, key) {
+        var value = target[key];
+
+        if (set.has(value)) {
+          delete target[key];
+          return;
+        }
+
+        if (!isStrict && isArray(value)) {
+          target[key] = useless(value, undefined, isStrict, set);
+        }
+
+        if (isObject(value)) {
+          useless(value, undefined, isStrict, set);
+        }
+      });
+      return target;
+    },
+    array: function array(target, keys, isStrict, set) {
+      var ary = [];
+      each(keys, function (_, key) {
+        var value = target[key];
+
+        if (set.has(value)) {
+          return;
+        }
+
+        if (!isStrict && isObject(value)) {
+          ary.push(useless(value, undefined, isStrict, set));
+        }
+
+        if (isArray(value)) {
+          ary.push(useless(value, undefined, isStrict, set));
+        }
+      });
+      return ary;
+    }
+  };
   /**
-   * 函数节流 https://github.com/jashkenas/underscore
+   * 根据 value 去除对象或数组中的无用 key，会修改目标对象或数组。
+   * 
+   * @param {(Object|Array)} target - 目标对象或数组
+   * @param {Array} options - 如果目标对象或数组的属性值和此数组中的任何一个元素相等，
+   *  那么该属性会被去除。
+   * @param {boolean} [isStrict=true] - 是否开启严格模式，默认开启。未开启时，如果对
+   * 象属性值是对象或数组，那么对象或数组内和 options 中相等的属性或元素会被去除；如果
+   * 数组属性值是对象或数组，那么对象或数组内和 options 中相等的属性或元素会被去除。
+   * @returns {(Object|Array)} - 去除属性后的目标对象或数组
+   */
+
+  var useless = function useless(target) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+    var isStrict = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+    var set = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : new Set();
+
+    var _keys = keys(target);
+
+    if (!set.size) {
+      each(options, function (_, key) {
+        set.add(key);
+      });
+    }
+
+    var type = getType(target);
+    return strategies$1[type](target, _keys, isStrict, set);
+  };
+
+  /**
+   * 函数节流 Credits: borrowed code from https://github.com/jashkenas/underscore
    * 
    * @param {Function} fn - 需要进行节流处理的原函数
    * @param {number} wait - 节流的时间间隔
@@ -268,7 +369,7 @@
   };
 
   /**
-   * 函数防抖 https://github.com/jashkenas/underscore
+   * 函数防抖 Credits: borrowed code from https://github.com/jashkenas/underscore
    * 
    * @param {Function} fn - 需要进行防抖处理的原函数
    * @param {number} wait - 防抖的时间间隔
@@ -323,103 +424,6 @@
     };
 
     return _debounce;
-  };
-
-  var strategies$2 = {
-    replace: function replace(target, sources, key) {
-      target[key] = sources;
-    }
-  };
-
-  var merge = function merge(target, sources, prevTarget, key) {
-    if (isObject(target) && isObject(sources) || isArray(target) && isArray(sources)) {
-      for (var _key in sources) {
-        var value1 = target[_key];
-        var value2 = sources[_key];
-        merge(value1, value2, target, _key);
-      }
-    } else {
-      strategies$2.replace(prevTarget || target, sources, key);
-    }
-
-    return target;
-  };
-
-  var hasPubProperty = function hasPubProperty(target, prop) {
-    return prop in target && !target.hasOwnProperty(prop);
-  };
-
-  var uniq = function uniq(ary) {
-    return _toConsumableArray(new Set(ary));
-  };
-
-  var strategies$1 = {
-    object: function object(target, keys, isStrict, set) {
-      each(keys, function (_, key) {
-        var value = target[key];
-
-        if (set.has(value)) {
-          delete target[key];
-          return;
-        }
-
-        if (!isStrict && isArray(value)) {
-          target[key] = useless(value, undefined, isStrict, set);
-        }
-
-        if (isObject(value)) {
-          useless(value, undefined, isStrict, set);
-        }
-      });
-      return target;
-    },
-    array: function array(target, keys, isStrict, set) {
-      var ary = [];
-      each(keys, function (_, key) {
-        var value = target[key];
-
-        if (set.has(value)) {
-          return;
-        }
-
-        if (!isStrict && isObject(value)) {
-          ary.push(useless(value, undefined, isStrict, set));
-        }
-
-        if (isArray(value)) {
-          ary.push(useless(value, undefined, isStrict, set));
-        }
-      });
-      return ary;
-    }
-  };
-  /**
-   * 根据 value 去除对象或数组中的无用 key，会修改目标对象或数组。
-   * 
-   * @param {(Object|Array)} target - 目标对象或数组
-   * @param {Array} options - 如果目标对象或数组的属性值和此数组中的任何一个元素相等，
-   *  那么该属性会被去除。
-   * @param {boolean} [isStrict=true] - 是否开启严格模式，默认开启。未开启时，如果对
-   * 象属性值是对象或数组，那么对象或数组内和 options 中相等的属性或元素会被去除；如果
-   * 数组属性值是对象或数组，那么对象或数组内和 options 中相等的属性或元素会被去除。
-   * @returns {(Object|Array)} - 去除属性后的目标对象或数组
-   */
-
-  var useless = function useless(target) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-    var isStrict = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-    var set = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : new Set();
-
-    var _keys = keys(target);
-
-    if (!set.size) {
-      each(options, function (_, key) {
-        set.add(key);
-      });
-    }
-
-    var type = getType(target);
-    return strategies$1[type](target, _keys, isStrict, set);
   };
 
   var strategies = {
@@ -487,18 +491,19 @@
   };
 
   var init = function init(utils) {
-    utils.getType = getType;
-    utils.each = each;
-    utils.shallowClone = shallowClone;
-    utils.deepClone = deepClone;
-    utils.random = random;
-    utils.throttle = throttle;
-    utils.debounce = debounce;
-    utils.merge = merge;
-    utils.hasPubProperty = hasPubProperty;
+    utils.has = has;
     utils.uniq = uniq;
     utils.keys = keys;
+    utils.each = each;
+    utils.merge = merge;
+    utils.random = random;
+    utils.hasPub = hasPub;
+    utils.getType = getType;
     utils.useless = useless;
+    utils.throttle = throttle;
+    utils.debounce = debounce;
+    utils.deepClone = deepClone;
+    utils.shallowClone = shallowClone;
   };
 
   var utils = Object.create(null);

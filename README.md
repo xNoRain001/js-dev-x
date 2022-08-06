@@ -51,7 +51,7 @@ _.each(o, (key, value) => {
 
 ```javascript
 /**
- * 返回一个对象的所有 key 组成的数组
+ * 返回一个对象的所有可枚举 key 组成的数组
  * 
  * @param {Object} obj - 对象
  * @returns {Array} 返回一个对象的所有 key 组成的数组
@@ -210,7 +210,20 @@ const ary2 = [{ foo: 'foo' }, ['bar', 'foo'], 'baz']
 _.merge(ary1, ary2) // output: [{ foo: 'foo' }, ['bar', 'foo'], 'baz']
 ```
 
-### hasPubProperty
+### has
+
+```javascript
+/**
+ * 判断一个对象是否存在某个私有属性
+ * 
+ * @param {Object} target - 目标对象
+ * @param {string} prop - 需要判断的公有属性
+ * @returns {boolean} - 结果
+ */
+_.has({}, 'foo') // output: false
+```
+
+### hasPub
 
 ```javascript
 /**
@@ -220,7 +233,7 @@ _.merge(ary1, ary2) // output: [{ foo: 'foo' }, ['bar', 'foo'], 'baz']
  * @param {string} prop - 需要判断的公有属性
  * @returns {boolean} - 结果
  */
-_.hasPubProperty({}, 'toString') // output: true
+_.hasPub({}, 'toString') // output: true
 ```
 
 ### uniq
