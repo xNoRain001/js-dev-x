@@ -587,37 +587,52 @@
     return obj;
   };
 
+  var methods = {
+    has: has,
+    wait: wait,
+    swap: swap,
+    uniq: uniq,
+    last: last,
+    keys: keys,
+    each: each,
+    isDef: isDef,
+    merge: merge,
+    isNull: isNull,
+    random: random,
+    hasPub: hasPub,
+    isUndef: isUndef,
+    isArray: isArray,
+    getType: getType,
+    useless: useless,
+    isObject: isObject,
+    isNumber: isNumber,
+    isString: isString,
+    throttle: throttle,
+    debounce: debounce,
+    isBoolean: isBoolean,
+    deepClone: deepClone,
+    isFunction: isFunction,
+    isArrayLike: isArrayLike,
+    isUndefined: isUndefined,
+    isPrimitive: isPrimitive,
+    eachReverse: eachReverse,
+    shallowClone: shallowClone,
+    isPlainObject: isPlainObject
+  };
+
   var init = function init(utils) {
-    utils.has = has;
-    utils.wait = wait;
-    utils.swap = swap;
-    utils.uniq = uniq;
-    utils.last = last;
-    utils.keys = keys;
-    utils.each = each;
-    utils.isDef = isDef;
-    utils.merge = merge;
-    utils.isNull = isNull;
-    utils.random = random;
-    utils.hasPub = hasPub;
-    utils.isUndef = isUndef;
-    utils.isArray = isArray;
-    utils.getType = getType;
-    utils.useless = useless;
-    utils.isObject = isObject;
-    utils.isNumber = isNumber;
-    utils.isString = isString;
-    utils.throttle = throttle;
-    utils.debounce = debounce;
-    utils.isBoolean = isBoolean;
-    utils.deepClone = deepClone;
-    utils.isFunction = isFunction;
-    utils.isArrayLike = isArrayLike;
-    utils.isUndefined = isUndefined;
-    utils.isPrimitive = isPrimitive;
-    utils.eachReverse = eachReverse;
-    utils.shallowClone = shallowClone;
-    utils.isPlainObject = isPlainObject;
+    utils.init = function () {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      each(methods, function (method) {
+        if (options.indexOf(method) < 0) {
+          delete utils[method];
+        }
+      });
+    };
+
+    each(methods, function (key, value) {
+      utils[key] = value;
+    });
   };
 
   var utils = Object.create(null);
