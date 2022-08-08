@@ -1,3 +1,5 @@
+import now from "../now"
+
 /**
  * 函数节流 Credits: borrowed code from https://github.com/jashkenas/underscore
  * 
@@ -28,7 +30,7 @@ const throttle = (fn, wait = 200, options = {}) => {
     
     // 之后再次触发时当作第一次点击，如果开始边界要不触发，应该让 prev 为 0。
     prev = leading
-      ? Date.now()
+      ? now()
       : 0
     result = fn.call(context, ...parmas)
     clear()
@@ -36,7 +38,7 @@ const throttle = (fn, wait = 200, options = {}) => {
 
   const _throttle = function (...args) {
     // 记录点击的时间
-    const now = Date.now()
+    const _now = now()
 
     parmas = args
     context = this
@@ -44,11 +46,11 @@ const throttle = (fn, wait = 200, options = {}) => {
     // 开始边界不触发，本来需要用一个变量标识是否是第一次点击，由于 prev 只有初始时的
     // 值是 0，正好可以用来标识是否是第一次点击。
     if (!prev && !leading) {
-      prev = now
+      prev = _now
     }
 
     // 计算需要等待的时间
-    const remaining = wait - (now - prev)
+    const remaining = wait - (_now - prev)
 
     if (remaining <= 0 || remaining > wait) { // remaining > wait 代表修改了时间
 
@@ -60,7 +62,7 @@ const throttle = (fn, wait = 200, options = {}) => {
         clearTimeout(timer)
       }
 
-      prev = now
+      prev = _now
       result = fn.call(context, ...parmas)
 
       clear()

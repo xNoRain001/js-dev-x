@@ -355,6 +355,10 @@
     return strategies$1[type](target, _keys, isStrict, set);
   };
 
+  var now = function now() {
+    return Date.now();
+  };
+
   /**
    * 函数节流 Credits: borrowed code from https://github.com/jashkenas/underscore
    * 
@@ -365,6 +369,7 @@
    * @param {boolean} [options.trailing=false] - 结束边界是否触发
    * @returns {Function} - 生成的节流函数
    */
+
   var throttle = function throttle(fn) {
     var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
     var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -385,14 +390,14 @@
 
     var later = function later() {
       // 之后再次触发时当作第一次点击，如果开始边界要不触发，应该让 prev 为 0。
-      prev = leading ? Date.now() : 0;
+      prev = leading ? now() : 0;
       result = fn.call.apply(fn, [context].concat(_toConsumableArray(parmas)));
       clear();
     };
 
     var _throttle = function _throttle() {
       // 记录点击的时间
-      var now = Date.now();
+      var _now = now();
 
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
@@ -403,11 +408,11 @@
       // 值是 0，正好可以用来标识是否是第一次点击。
 
       if (!prev && !leading) {
-        prev = now;
+        prev = _now;
       } // 计算需要等待的时间
 
 
-      var remaining = wait - (now - prev);
+      var remaining = wait - (_now - prev);
 
       if (remaining <= 0 || remaining > wait) {
         // remaining > wait 代表修改了时间
@@ -419,7 +424,7 @@
           clearTimeout(timer);
         }
 
-        prev = now;
+        prev = _now;
         result = fn.call.apply(fn, [context].concat(_toConsumableArray(parmas)));
         clear();
         return result;
@@ -447,31 +452,41 @@
    * 
    * @param {Function} fn - 需要进行防抖处理的原函数
    * @param {number} wait - 防抖的时间间隔
-   * @param {boolean} immediate - 开始边界触发
+   * @param {boolean} [immediate=false] - 假设 wait 为 1000，再这个时间段内调用了两次
+   *  防抖函数，如果 immediate 为 false，表示开始边界不触发，结束边界，即触发第二次调用
+   *  的防抖函数，如果 immediate 为 true，表示开始边界触发，结束边界不触发，即触发第一
+   *  次调用的防抖函数。
    * @returns {Function} - 生成的防抖函数
    */
+
   var debounce = function debounce(fn, wait, immediate) {
-    var context = null,
-        timer = null,
+    var prev = 0,
+        // prev 是上次点击的时间戳，不是 fn 执行的时间戳。
+    timer = null,
         params = null,
         result = null,
-        previous = 0;
+        context = null;
 
     var later = function later() {
-      var passed = Date.now() - previous;
+      var remaining = wait - (now() - prev);
 
-      if (wait > passed) {
-        timer = setTimeout(later, wait - passed);
+      if (remaining > 0) {
+        // 还需要等 remaining 秒，如果之后又马上点击，又会进入这里，
+        // 确保点击间隔大于 wait 时才触发。
+        timer = setTimeout(later, remaining);
       } else {
-        timer = null;
-
+        // 点击间隔大于 wait 时进入这里，如果设置了开始边界触发，不让它执行。
         if (!immediate) {
           result = fn.call.apply(fn, [context].concat(_toConsumableArray(params)));
         }
+
+        timer = null;
       }
     };
 
     var _debounce = function _debounce() {
+      prev = now(); // 更新上次点击时间
+
       context = this;
 
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -479,10 +494,9 @@
       }
 
       params = args;
-      previous = Date.now();
 
       if (!timer) {
-        timer = setTimeout(later, wait);
+        timer = setTimeout(later, wait); // 开始边界触发
 
         if (immediate) {
           result = fn.call.apply(fn, [context].concat(_toConsumableArray(params)));

@@ -215,7 +215,7 @@ obj // output: { foo: { bar: 'bar' } }
 
 ```javascript
 /**
- * 函数节流 Credits: borrowed code from https://github.com/jashkenas/underscore
+ * 函数节流
  * 
  * @param {Function} fn - 需要进行节流处理的原函数
  * @param {number} wait - 节流的时间间隔
@@ -235,11 +235,14 @@ const throttled = _.throttle(fn, 1000)
 
 ```javascript
 /**
- * 函数防抖。
+ * 函数防抖
  * 
  * @param {Function} fn - 需要进行防抖处理的原函数
  * @param {number} wait - 防抖的时间间隔
- * @param {boolean} immediate - 是否开始边界触发
+ * @param {boolean} [immediate=false] - 假设 wait 为 1000，再这个时间段内调用了两次
+ *  防抖函数，如果 immediate 为 false，表示开始边界不触发，结束边界，即触发第二次调用
+ *  的防抖函数，如果 immediate 为 true，表示开始边界触发，结束边界不触发，即触发第一
+ *  次调用的防抖函数。
  * @returns {Function} - 生成的防抖函数
  */
 const debounced = _.debounce(fn)
