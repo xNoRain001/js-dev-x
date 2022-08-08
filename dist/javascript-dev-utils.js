@@ -8,6 +8,10 @@
     return target.hasOwnProperty(prop);
   };
 
+  var now = function now() {
+    return Date.now();
+  };
+
   var wait = function wait(time) {
     return new Promise(function (resolve) {
       setTimeout(function () {
@@ -355,10 +359,6 @@
     return strategies$1[type](target, _keys, isStrict, set);
   };
 
-  var now = function now() {
-    return Date.now();
-  };
-
   /**
    * 函数节流 Credits: borrowed code from https://github.com/jashkenas/underscore
    * 
@@ -602,6 +602,7 @@
 
   var methods = {
     has: has,
+    now: now,
     wait: wait,
     swap: swap,
     uniq: uniq,

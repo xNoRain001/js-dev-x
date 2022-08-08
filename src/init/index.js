@@ -1,4 +1,5 @@
 import has from "../has"
+import now from "../now"
 import wait from "../wait"
 import swap from "../swap"
 import each from "../each"
@@ -32,6 +33,7 @@ import {
 
 const methods = {
   has,
+  now,
   wait,
   swap,
   uniq,
