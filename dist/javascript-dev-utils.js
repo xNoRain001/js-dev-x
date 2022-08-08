@@ -360,42 +360,46 @@
    * 
    * @param {Function} fn - 需要进行节流处理的原函数
    * @param {number} wait - 节流的时间间隔
-   * @param {Object} options - 用于设置开始边界和结束边界是否触发的配置项
-   * @param {boolean} options.leading - 开始边界是否触发
-   * @param {boolean} options.trailing - 结束边界是否触发
+   * @param {Object} [options] - 用于设置开始边界和结束边界是否触发的配置项
+   * @param {boolean} [options.leading=true] - 开始边界是否触发
+   * @param {boolean} [options.trailing=false] - 结束边界是否触发
    * @returns {Function} - 生成的节流函数
    */
   var throttle = function throttle(fn) {
     var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 200;
     var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-    var leading = options.leading,
-        trailing = options.trailing;
+    var _options$leading = options.leading,
+        leading = _options$leading === void 0 ? true : _options$leading,
+        _options$trailing = options.trailing,
+        trailing = _options$trailing === void 0 ? false : _options$trailing;
     var context = null,
         parmas = null,
         result = null,
         timer = null,
-        prev = 0; // 结束边界触发的函数
+        prev = 0;
+
+    var clear = function clear() {
+      context = parmas = timer = null;
+    }; // 结束边界触发的函数
+
 
     var later = function later() {
       // 之后再次触发时当作第一次点击，如果开始边界要不触发，应该让 prev 为 0。
       prev = leading ? Date.now() : 0;
-      timer = null;
       result = fn.call.apply(fn, [context].concat(_toConsumableArray(parmas)));
-
-      if (!timer) {
-        context = parmas = null;
-      }
+      clear();
     };
 
     var _throttle = function _throttle() {
+      // 记录点击的时间
+      var now = Date.now();
+
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
       parmas = args;
-      context = this; // 记录点击的时间
-
-      var now = Date.now(); // 开始边界不触发，本来需要用一个变量标识是否是第一次点击，由于 prev 只有初始时的
+      context = this; // 开始边界不触发，本来需要用一个变量标识是否是第一次点击，由于 prev 只有初始时的
       // 值是 0，正好可以用来标识是否是第一次点击。
 
       if (!prev && !leading) {
@@ -413,16 +417,11 @@
         // 新，就不会执行下面的代码。总之保证了规定时间内只会执行一次。
         if (timer) {
           clearTimeout(timer);
-          timer = null;
         }
 
         prev = now;
         result = fn.call.apply(fn, [context].concat(_toConsumableArray(parmas)));
-
-        if (!timer) {
-          context = parmas = null;
-        }
-
+        clear();
         return result;
       } // 结束边界触发
 
@@ -437,7 +436,7 @@
     _throttle.cancle = function () {
       clearTimeout(timer);
       prev = 0;
-      timer = context = parmas = null;
+      clear();
     };
 
     return _throttle;
