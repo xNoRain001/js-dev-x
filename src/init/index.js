@@ -30,6 +30,7 @@ import {
   isPrimitive,
   isPlainObject
 } from "../type"
+import isPromise from "../type/is-promise"
 
 const methods = {
   has,
@@ -58,6 +59,7 @@ const methods = {
   deepClone,
   isFunction,
   isArrayLike,
+  isPrimitive,
   isUndefined,
   isPrimitive,
   eachReverse,

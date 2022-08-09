@@ -19,7 +19,7 @@ npm i javascript-dev-utils
 ## 使用
 
 ```javascript
-// import _ from 'javascript-dev-utils'
+// import 'javascript-dev-utils'
 
 // 默认 _ 上会挂载所有的方法，可以通过调用 init 方法只挂载指定的方法。
 _.init(['each', 'has'])
@@ -163,6 +163,7 @@ _.isArrayLike()
 _.isPlainObject()
 _.isDef() // 值不是 null 或 undefined 时返回 true
 _.isUndef() // 值是 null 或 undefined 时返回 true
+_.isPromise()
 ```
 
 </details>
