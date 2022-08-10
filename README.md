@@ -21,7 +21,7 @@ npm i javascript-dev-utils
 ```javascript
 // import 'javascript-dev-utils'
 
-// 默认 _ 上会挂载所有的方法，可以通过调用 init 方法只挂载指定的方法。
+// 默认挂载所有方法，可以通过调用 init 方法只挂载指定的方法。
 _.init(['each', 'has'])
 ```
 
@@ -246,7 +246,7 @@ const throttled = _.throttle(fn, 1000)
  *  次调用的防抖函数。
  * @returns {Function} - 生成的防抖函数
  */
-const debounced = _.debounce(fn)
+const debounced = _.debounce(fn, 1000)
 ```
 
 </details>
