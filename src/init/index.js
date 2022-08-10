@@ -23,6 +23,7 @@ import {
   isObject,
   isNumber,
   isString,
+  isPromise,
   isBoolean,
   isFunction,
   isUndefined,
@@ -30,7 +31,6 @@ import {
   isPrimitive,
   isPlainObject
 } from "../type"
-import isPromise from "../type/is-promise"
 
 const methods = {
   has,
@@ -55,20 +55,25 @@ const methods = {
   isString,
   throttle,
   debounce,
+  isPromise,
   isBoolean,
   deepClone,
   isFunction,
   isArrayLike,
   isPrimitive,
   isUndefined,
-  isPrimitive,
   eachReverse,
   shallowClone,
   isPlainObject
 }
 
 const init = utils => {
-  utils.init = (options = []) => {
+  utils.init = (options = [], ...args) => {
+    if (!isArray(options)) {
+      args.unshift(options)
+      options = args
+    }
+
     each(methods, method => {
       if (options.indexOf(method) < 0) {
         delete utils[method]

@@ -22,7 +22,8 @@ npm i javascript-dev-utils
 // import 'javascript-dev-utils'
 
 // 默认挂载所有方法，可以通过调用 init 方法只挂载指定的方法。
-_.init(['each', 'has'])
+_.init(['each', 'has']) // 或者 _.init('each', 'has')
+
 ```
 
 ## APIs

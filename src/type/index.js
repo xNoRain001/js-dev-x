@@ -7,6 +7,7 @@ import isObject from "./is-object"
 import isNumber from "./is-number"
 import isString from "./is-string"
 import isBoolean from "./is-boolean"
+import isPromise from "./is-promise"
 import isFunction from "./is-function"
 import isUndefined from "./is-undefined"
 import isArrayLike from "./is-array-like"
@@ -24,6 +25,7 @@ export {
   isNumber,
   isString,
   isBoolean,
+  isPromise,
   isFunction,
   isUndefined,
   isArrayLike,

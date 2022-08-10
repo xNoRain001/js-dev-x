@@ -124,6 +124,10 @@
     return v === true || v === false;
   };
 
+  var isPromise = function isPromise(v) {
+    return v && typeof v === 'function';
+  };
+
   var isFunction = function isFunction(v) {
     return typeof v === 'function';
   };
@@ -623,12 +627,13 @@
     isString: isString,
     throttle: throttle,
     debounce: debounce,
+    isPromise: isPromise,
     isBoolean: isBoolean,
     deepClone: deepClone,
     isFunction: isFunction,
     isArrayLike: isArrayLike,
-    isUndefined: isUndefined,
     isPrimitive: isPrimitive,
+    isUndefined: isUndefined,
     eachReverse: eachReverse,
     shallowClone: shallowClone,
     isPlainObject: isPlainObject
@@ -637,6 +642,16 @@
   var init = function init(utils) {
     utils.init = function () {
       var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+      if (!isArray(options)) {
+        for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+          args[_key - 1] = arguments[_key];
+        }
+
+        args.unshift(options);
+        options = args;
+      }
+
       each(methods, function (method) {
         if (options.indexOf(method) < 0) {
           delete utils[method];
