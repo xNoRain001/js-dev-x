@@ -112,6 +112,14 @@
     return v !== null && _typeof(v) === 'object';
   };
 
+  var isBigInt = function isBigInt(v) {
+    return typeof v === 'bigint';
+  };
+
+  var isSymbol = function isSymbol(v) {
+    return _typeof(v) === 'symbol';
+  };
+
   var isNumber = function isNumber(v) {
     return typeof v === 'number';
   };
@@ -625,6 +633,8 @@
     isObject: isObject,
     isNumber: isNumber,
     isString: isString,
+    isBigInt: isBigInt,
+    isSymbol: isSymbol,
     throttle: throttle,
     debounce: debounce,
     isPromise: isPromise,
@@ -648,7 +658,7 @@
   var utils = Object.create(null);
   mount(utils);
 
-  if (utils.isUndefined(window)) {
+  if (typeof window === 'undefined') {
     global._ = utils;
   }
 

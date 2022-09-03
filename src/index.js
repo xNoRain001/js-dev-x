@@ -4,7 +4,7 @@ const utils = Object.create(null)
 
 mount(utils)
 
-if (utils.isUndefined(window)) {
+if (typeof window === 'undefined') {
   global._ = utils
 }
 

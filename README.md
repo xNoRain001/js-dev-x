@@ -26,6 +26,39 @@ _[method]()
 
 <details>
 
+<summary>类型检测</summary>
+
+```js
+/**
+* 返回给定值的数据类型。
+* 
+* @param {*} v - 需要判断类型的值
+* @returns {string} 给定值的数据类型，结果为全小写字母。
+*/
+_.getType({}) // output: 'object'
+
+// 一些其它的方法
+_.isString()
+_.isNumber()
+_.isBoolean()
+_.isNull()
+_.isUndefined()
+_.isSymbol()
+_.isBigInt()
+_.isArray()
+_.isArrayLike()
+_.isPlainObject()
+_.isPromise()
+_.isPrimitive()
+_.isObject()
+_.isDef()
+_.isUndef()
+```
+
+</details>
+
+<details>
+
 <summary>each - 遍历（类）数组或对象。</summary>
 
 ```javascript
@@ -38,7 +71,7 @@ _[method]()
  */
 const o = { foo: 'foo', bar: 'bar', baz: 'baz' }
 
-_.each(o, (key, value) => {
+_.each(o, (value, key) => {
   // ...
 
   if (key === 'bar') {
@@ -131,39 +164,6 @@ _.useless(ary, [null, 'foo'], false)
 _.random('number', '[3, 5]') // output: 4
 _.random('letter', 5) // output: 'PTzgp'
 ```
-
-</details>
-
-<details>
-
-<summary>getType - 返回给定值的数据类型。</summary>
-
-```javascript
-/**
- * 返回给定值的数据类型。
- * 
- * @param {*} v - 需要判断类型的值
- * @returns {string} 给定值的数据类型，结果都为全小写字母。
- */
-_.getType({}) // output: 'object'
-
-// 顺便提供了一些其它的方法
-_.isString()
-_.isNumber()
-_.isBoolean()
-_.isNull()
-_.isUndefined()
-_.isPrimitive()
-_.isObject()
-_.isArray()
-_.isArrayLike()
-_.isPlainObject()
-_.isDef() // 值不是 null 或 undefined 时返回 true
-_.isUndef() // 值是 null 或 undefined 时返回 true
-_.isPromise()
-```
-
-</details>
 
 <details>
 

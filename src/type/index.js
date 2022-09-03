@@ -4,6 +4,8 @@ import isUndef from "./is-undef"
 import getType from "./get-type"
 import isArray from "./is-array"
 import isObject from "./is-object"
+import isBigInt from "./is-bigint"
+import isSymbol from "./is-symbol"
 import isNumber from "./is-number"
 import isString from "./is-string"
 import isBoolean from "./is-boolean"
@@ -14,7 +16,6 @@ import isArrayLike from "./is-array-like"
 import isPrimitive from "./is-primitive"
 import isPlainObject from "./is-plain-object"
 
-
 export {
   isDef,
   isNull,
@@ -23,7 +24,9 @@ export {
   isUndef,
   isObject,
   isNumber,
+  isBigInt,
   isString,
+  isSymbol,
   isBoolean,
   isPromise,
   isFunction,
