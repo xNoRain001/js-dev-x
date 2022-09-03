@@ -1,9 +1,9 @@
-import keys from '../keys/index'
+import keys from '../keys'
 import { 
   isArray,
   isArrayLike ,
   isObject
-} from '../type/index'
+} from '../type'
 
 /**
  * 遍历（类）数组或对象
@@ -15,7 +15,7 @@ import {
 const each = (target, cb) => {
   if (isArray(target) || isArrayLike(target)) {
     for (let i = 0, l = target.length; i < l; i++) {
-      if (cb.call(target, i, target[i]) === false) {
+      if (cb.call(target, target[i], i) === false) {
         break
       }
     }
@@ -26,7 +26,7 @@ const each = (target, cb) => {
     for (let i = 0, l = _keys.length; i < l; i++) {
       const key = _keys[i]
 
-      if (cb.call(target, key, target[key]) === false) {
+      if (cb.call(target, target[key], key) === false) {
         break
       }
     }

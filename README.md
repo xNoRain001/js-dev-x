@@ -1,29 +1,25 @@
 ## 介绍
 
-JavaScript 开发工具库。
+JavaScript 工具库。
 
-## 下载
+## 安装
 
 ### npm
 
 ```
-npm i javascript-dev-utils
+npm i js-dev-x
 ```
 
 ### src
 
 ```html
-<script src="../dist/javascript-dev-utils.js"></script>
+<script src="../dist/js-dev-x"></script>
 ```
 
 ## 使用
 
 ```javascript
-// import 'javascript-dev-utils'
-
-// 默认挂载所有方法，可以通过调用 init 方法只挂载指定的方法。
-_.init(['each', 'has']) // 或者 _.init('each', 'has')
-
+_[method]()
 ```
 
 ## APIs

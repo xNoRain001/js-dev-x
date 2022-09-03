@@ -5,7 +5,7 @@ export default {
   input: './src/index.js',
 
   output: {
-    file: './dist/javascript-dev-utils.js',
+    file: './dist/js-dev-x.js',
     format: 'umd',
     name: '_'
   },

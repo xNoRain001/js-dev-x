@@ -1,5 +1,5 @@
 import each from '../each'
-import shallowClone from "./shallow-clone"
+import shallowClone from "../shallow-clone"
 import { getType } from "../type"
 
 /**
@@ -21,7 +21,7 @@ const deepClone = (target, cache = new WeakSet()) => {
 
   const obj = new target.constructor
 
-  each(target, (key, value) => {
+  each(target, (value, key) => {
     obj[key] = deepClone(value, cache)
   })
 

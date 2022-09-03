@@ -1,11 +1,11 @@
 import getType from '../type/get-type'
-import keys from '../keys/index'
-import each from '../each/index'
-import { isArray, isObject } from '../type/index'
+import keys from '../keys'
+import each from '../each'
+import { isArray, isObject } from '../type'
 
 const strategies = {
   object (target, keys, isStrict, set) {
-    each(keys, (_, key) => {
+    each(keys, key => {
       const value = target[key]
 
       if (set.has(value)) {
@@ -32,13 +32,12 @@ const strategies = {
   array (target, keys, isStrict, set) {
     const ary = []
 
-    each(keys, (_, key) => {
+    each(keys, key => {
       const value = target[key]
 
       if (set.has(value)) {
         return
       }
-
 
       if (
         !isStrict && 
@@ -71,7 +70,7 @@ const useless = (target, options = [], isStrict = true, set = new Set()) => {
   const _keys = keys(target)
   
   if (!set.size) {
-    each(options, (_, key) => {
+    each(options, key => {
       set.add(key)
     })
   }

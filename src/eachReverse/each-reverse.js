@@ -1,9 +1,9 @@
-import keys from '../keys/index'
+import keys from '../keys'
 import { 
   isArray,
   isArrayLike ,
   isObject
-} from '../type/index'
+} from '../type'
 
 const eachReverse = (target, cb) => {
   if (isArray(target) || isArrayLike(target)) {

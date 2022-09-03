@@ -12,8 +12,10 @@ import hasPub from "../hasPub"
 import useless from "../useless"
 import throttle from "../throttle"
 import debounce from "../debounce"
+import deepClone from "../deep-clone"
 import eachReverse from "../eachReverse/each-reverse"
-import { shallowClone, deepClone } from '../clone'
+import shallowClone from "../shallow-clone"
+
 import { 
   isDef,
   isNull,
@@ -67,23 +69,10 @@ const methods = {
   isPlainObject
 }
 
-const init = utils => {
-  utils.init = (options = [], ...args) => {
-    if (!isArray(options)) {
-      args.unshift(options)
-      options = args
-    }
-
-    each(methods, method => {
-      if (options.indexOf(method) < 0) {
-        delete utils[method]
-      }
-    })
-  }
-
-  each(methods, (key, value) => {
+const mount = utils => {
+  each(methods, (value, key) => {
     utils[key] = value
   })
 }
 
-export default init
+export default mount

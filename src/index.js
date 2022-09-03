@@ -1,7 +1,11 @@
-import init from "./init/index"
+import mount from "./mount"
 
 const utils = Object.create(null)
 
-init(utils)
+mount(utils)
+
+if (utils.isUndefined(window)) {
+  global._ = utils
+}
 
 export default utils

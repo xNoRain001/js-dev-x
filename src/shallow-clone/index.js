@@ -1,4 +1,4 @@
-import each from '../each/index'
+import each from '../each'
 import { getType, isPrimitive } from "../type"
 
 const strategies = {
@@ -8,7 +8,7 @@ const strategies = {
   object (target, Ctor) {
     const obj = new Ctor
 
-    each(target, (key, value) => {
+    each(target, (value, key) => {
       obj[key] = value
     })
 

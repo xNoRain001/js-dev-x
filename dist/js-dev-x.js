@@ -163,7 +163,7 @@
   var each = function each(target, cb) {
     if (isArray(target) || isArrayLike(target)) {
       for (var i = 0, l = target.length; i < l; i++) {
-        if (cb.call(target, i, target[i]) === false) {
+        if (cb.call(target, target[i], i) === false) {
           break;
         }
       }
@@ -173,7 +173,7 @@
       for (var _i = 0, _l = _keys.length; _i < _l; _i++) {
         var key = _keys[_i];
 
-        if (cb.call(target, key, target[key]) === false) {
+        if (cb.call(target, target[key], key) === false) {
           break;
         }
       }
@@ -296,7 +296,7 @@
 
   var strategies$1 = {
     object: function object(target, keys, isStrict, set) {
-      each(keys, function (_, key) {
+      each(keys, function (key) {
         var value = target[key];
 
         if (set.has(value)) {
@@ -316,7 +316,7 @@
     },
     array: function array(target, keys, isStrict, set) {
       var ary = [];
-      each(keys, function (_, key) {
+      each(keys, function (key) {
         var value = target[key];
 
         if (set.has(value)) {
@@ -354,7 +354,7 @@
     var _keys = keys(target);
 
     if (!set.size) {
-      each(options, function (_, key) {
+      each(options, function (key) {
         set.add(key);
       });
     }
@@ -518,35 +518,13 @@
     return _debounce;
   };
 
-  var eachReverse = function eachReverse(target, cb) {
-    if (isArray(target) || isArrayLike(target)) {
-      for (var i = target.length - 1; i >= 0; i--) {
-        if (cb.call(target, i, target[i]) === false) {
-          break;
-        }
-      }
-    } else if (isObject(target)) {
-      var _keys = keys(target);
-
-      for (var _i = _keys.length - 1; _i >= 0; _i--) {
-        var key = _keys[_i];
-
-        if (cb.call(target, key, target[key]) === false) {
-          break;
-        }
-      }
-    }
-
-    return target;
-  };
-
   var strategies = {
     array: function array(target) {
       return target.slice();
     },
     object: function object(target, Ctor) {
       var obj = new Ctor();
-      each(target, function (key, value) {
+      each(target, function (value, key) {
         obj[key] = value;
       });
       return obj;
@@ -598,10 +576,32 @@
 
     cache.add(target);
     var obj = new target.constructor();
-    each(target, function (key, value) {
+    each(target, function (value, key) {
       obj[key] = deepClone(value, cache);
     });
     return obj;
+  };
+
+  var eachReverse = function eachReverse(target, cb) {
+    if (isArray(target) || isArrayLike(target)) {
+      for (var i = target.length - 1; i >= 0; i--) {
+        if (cb.call(target, i, target[i]) === false) {
+          break;
+        }
+      }
+    } else if (isObject(target)) {
+      var _keys = keys(target);
+
+      for (var _i = _keys.length - 1; _i >= 0; _i--) {
+        var key = _keys[_i];
+
+        if (cb.call(target, key, target[key]) === false) {
+          break;
+        }
+      }
+    }
+
+    return target;
   };
 
   var methods = {
@@ -639,33 +639,18 @@
     isPlainObject: isPlainObject
   };
 
-  var init = function init(utils) {
-    utils.init = function () {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-      if (!isArray(options)) {
-        for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-          args[_key - 1] = arguments[_key];
-        }
-
-        args.unshift(options);
-        options = args;
-      }
-
-      each(methods, function (method) {
-        if (options.indexOf(method) < 0) {
-          delete utils[method];
-        }
-      });
-    };
-
-    each(methods, function (key, value) {
+  var mount = function mount(utils) {
+    each(methods, function (value, key) {
       utils[key] = value;
     });
   };
 
   var utils = Object.create(null);
-  init(utils);
+  mount(utils);
+
+  if (utils.isUndefined(window)) {
+    global._ = utils;
+  }
 
   return utils;
 

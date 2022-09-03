@@ -1,4 +1,4 @@
-import { isArray, isObject } from '../type/index'
+import { isArray, isObject } from '../type'
 
 const strategies = {
   replace (target, sources, key) {
