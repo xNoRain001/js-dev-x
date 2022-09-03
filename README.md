@@ -79,7 +79,7 @@ _.each(o, (value, key) => {
   }
 })
 
-// 顺便提供了倒序遍历的方法
+// 倒序遍历的方法
 _.eachReverse()
 ```
 
@@ -164,6 +164,8 @@ _.useless(ary, [null, 'foo'], false)
 _.random('number', '[3, 5]') // output: 4
 _.random('letter', 5) // output: 'PTzgp'
 ```
+
+</details>
 
 <details>
 
